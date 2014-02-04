@@ -25,7 +25,7 @@ class SinatraSchemeTest < Sinatra::Base
       link.title = "Info"
       link.rel = "self"
       link.description = "Info for account."
-      link.execute do
+      link.body do
         # ...
       end
     end

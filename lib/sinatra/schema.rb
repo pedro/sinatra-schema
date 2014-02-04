@@ -8,9 +8,8 @@ module Sinatra
         @href   = options[:href]
       end
 
-      def execute(&blk)
-        @execute = blk
-        puts "saved: #{@execute.inspect}"
+      def body(&blk)
+        @body = blk
       end
 
       def run
