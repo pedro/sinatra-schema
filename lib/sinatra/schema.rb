@@ -20,7 +20,9 @@ module Sinatra
       def register(app)
         link = self
         app.send(method.downcase, href) do
-          link.action_block.call
+          res = link.action_block.call
+          link.resource.validate_response!(res)
+          link.resource.serialize(res)
         end
       end
     end
@@ -30,7 +32,7 @@ module Sinatra
     end
 
     class Resource
-      attr_accessor :id, :path, :title, :description, :properties
+      attr_accessor :id, :path, :title, :description, :properties, :serializer
 
       def initialize(app, path)
         @app   = app
@@ -51,6 +53,14 @@ module Sinatra
         yield(link)
         link.register(@app)
         @links << link
+      end
+
+      def validate_response!(res)
+        true
+      end
+
+      def serialize(response)
+        MultiJson.encode(serializer.call(response))
       end
 
       def to_schema
