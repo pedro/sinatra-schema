@@ -48,7 +48,6 @@ module Sinatra
 
       def link(method, href, &blk)
         href = "#{path}/#{href.chomp("/")}".chomp("/")
-        puts href
         link = Link.new(resource: self, method: method, href: href)
         yield(link)
         link.register(@app)
