@@ -1,6 +1,6 @@
 # Sinatra Schema
 
-Define a schema for your Sinatra application to get requests and responses validates. Dump it schema as a JSON Schema to aid client generation and more!
+Define a schema for your Sinatra application to get requests and responses validated. Dump it schema as a JSON Schema to aid client generation and more!
 
 
 ## Usage
