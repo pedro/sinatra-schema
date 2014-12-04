@@ -23,7 +23,7 @@ class SinatraSchemeTest < Sinatra::Base
     res.properties = [:email]
     res.serializer = lambda { |x| { email: x }}
 
-    res.link(:get, "/") do |link|
+    res.link(:get) do |link|
       link.title = "Info"
       link.rel = "self"
       link.description = "Info for account."

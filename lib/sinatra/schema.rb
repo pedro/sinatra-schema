@@ -47,7 +47,7 @@ module Sinatra
         yield @defs[id]
       end
 
-      def link(method, href, &blk)
+      def link(method, href="/", &blk)
         href = "#{path}/#{href.chomp("/")}".chomp("/")
         link = Link.new(resource: self, method: method, href: href)
         yield(link)
