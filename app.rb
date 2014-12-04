@@ -21,14 +21,14 @@ class SinatraSchemeTest < Sinatra::Base
     end
 
     res.properties = [:email]
-    res.serializer = lambda { |x| { email: "foo" }}
+    res.serializer = lambda { |x| { email: x }}
 
     res.link(:get, "/") do |link|
       link.title = "Info"
       link.rel = "self"
       link.description = "Info for account."
       link.action do
-        "sinatra schema body"
+        "foo@bar.com"
       end
     end
   end

@@ -10,8 +10,8 @@ describe SinatraSchemeTest do
   it "support resource links" do
     get "/accounts"
     assert_equal 200, last_response.status
-    assert_equal({ "email" => "foo" },
-        MultiJson.decode(last_response.body))
+    assert_equal({ "email" => "foo@bar.com" },
+      MultiJson.decode(last_response.body))
   end
 
   it "exposes the json schema" do
