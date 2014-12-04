@@ -26,9 +26,19 @@ class SinatraSchemeTest < Sinatra::Base
     res.link(:get) do |link|
       link.title = "Info"
       link.rel = "self"
-      link.description = "Info for account."
+      link.description = "Info for account"
       link.action do
         "foo@bar.com"
+      end
+    end
+
+    res.link(:post) do |link|
+      link.title = "Create"
+      link.rel = "create"
+      link.description = "Create a new account"
+      link.properties = [:email]
+      link.action do |params|
+        params[:email]
       end
     end
   end

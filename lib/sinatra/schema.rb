@@ -1,7 +1,7 @@
 module Sinatra
   module Schema
     class Link
-      attr_accessor :resource, :title, :description, :href, :method, :rel, :action
+      attr_accessor :resource, :title, :description, :href, :method, :properties, :rel, :action
 
       def initialize(options)
         @resource = options[:resource]
@@ -20,7 +20,7 @@ module Sinatra
       def register(app)
         link = self
         app.send(method.downcase, href) do
-          res = link.action_block.call
+          res = link.action_block.call(params)
           serialized = link.resource.serialize(res)
           link.resource.validate_response!(serialized)
           MultiJson.encode(serialized)

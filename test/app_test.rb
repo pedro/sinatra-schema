@@ -14,6 +14,18 @@ describe SinatraSchemeTest do
       MultiJson.decode(last_response.body))
   end
 
+  it "support resource links" do
+    post "/accounts", email: "omg"
+    assert_equal 200, last_response.status
+    assert_equal({ "email" => "omg" },
+      MultiJson.decode(last_response.body))
+  end
+
+  it "validates input" do
+    post "/accounts", foo: "bar"
+    assert_equal 400, last_response.status
+  end
+
   it "exposes the json schema" do
     get "/schema"
     assert_equal 200, last_response.status
