@@ -41,7 +41,7 @@ module Sinatra
         @defs  = {}
       end
 
-      def add_definition(id)
+      def define(id)
         @defs[id] = Definition.new
         yield @defs[id]
       end

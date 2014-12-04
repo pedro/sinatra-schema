@@ -13,7 +13,7 @@ class SinatraSchemeTest < Sinatra::Base
     res.title = "Account"
     res.description = "An account represents an individual signed up to use the Heroku platform."
 
-    res.add_definition(:email) do |d|
+    res.define(:email) do |d|
       d.description = "unique email address of account"
       d.example = "username@example.com"
       d.format = "email"
