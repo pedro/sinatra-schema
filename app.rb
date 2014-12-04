@@ -8,7 +8,8 @@ class SinatraSchemeTest < Sinatra::Base
     "hi"
   end
 
-  resource(:account) do |res|
+  resource("/accounts") do |res|
+    res.id = :account
     res.title = "Account"
     res.description = "An account represents an individual signed up to use the Heroku platform."
 
@@ -21,12 +22,12 @@ class SinatraSchemeTest < Sinatra::Base
 
     res.properties = [:email]
 
-    res.link(:get, "/account") do |link|
+    res.link(:get, "/") do |link|
       link.title = "Info"
       link.rel = "self"
       link.description = "Info for account."
-      link.body do
-        # ...
+      link.action do
+        "sinatra schema body"
       end
     end
   end

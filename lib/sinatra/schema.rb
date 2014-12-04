@@ -1,24 +1,26 @@
 module Sinatra
   module Schema
     class Link
-      attr_accessor :title, :description, :href, :method, :rel
+      attr_accessor :resource, :title, :description, :href, :method, :rel, :action
 
       def initialize(options)
-        @method = options[:method]
-        @href   = options[:href]
+        @resource = options[:resource]
+        @method   = options[:method]
+        @href     = options[:href]
       end
 
-      def body(&blk)
-        @body = blk
+      def action(&blk)
+        @action = blk
       end
 
-      def run
-        @execute.call
+      def action_block
+        @action
       end
 
       def register(app)
+        link = self
         app.send(method.downcase, href) do
-          "hi from sinatra-schema"
+          link.action_block.call
         end
       end
     end
@@ -28,12 +30,13 @@ module Sinatra
     end
 
     class Resource
-      attr_accessor :title, :description, :properties
+      attr_accessor :id, :path, :title, :description, :properties
 
-      def initialize(app)
-        @app = app
+      def initialize(app, path)
+        @app   = app
+        @path  = path.chomp("/")
         @links = []
-        @defs = {}
+        @defs  = {}
       end
 
       def add_definition(id)
@@ -42,7 +45,9 @@ module Sinatra
       end
 
       def link(method, href, &blk)
-        link = Link.new(method: method, href: href)
+        href = "#{path}/#{href.chomp("/")}".chomp("/")
+        puts href
+        link = Link.new(resource: self, method: method, href: href)
         yield(link)
         link.register(@app)
         @links << link
@@ -72,9 +77,10 @@ module Sinatra
       @resources ||= {}
     end
 
-    def resource(id)
-      resources[id] = Resource.new(self)
-      yield resources[id]
+    def resource(path)
+      res = Resource.new(self, path)
+      yield(res)
+      resources[res.id] = res
     end
 
   end

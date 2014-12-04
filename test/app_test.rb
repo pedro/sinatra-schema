@@ -8,9 +8,9 @@ describe SinatraSchemeTest do
   end
 
   it "support resource links" do
-    get "/account"
+    get "/accounts"
     assert_equal 200, last_response.status
-    assert_equal "hi from sinatra-schema", last_response.body
+    assert_equal "sinatra schema body", last_response.body
   end
 
   it "exposes the json schema" do
