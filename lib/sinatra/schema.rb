@@ -9,6 +9,7 @@ require "sinatra/schema/resource"
 require "sinatra/schema/root"
 require "sinatra/schema/utils"
 require "sinatra/schema/dsl/definitions"
+require "sinatra/schema/dsl/links"
 require "sinatra/schema/dsl/resources"
 
 module Sinatra

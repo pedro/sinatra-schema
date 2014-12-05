@@ -14,19 +14,18 @@ class TestApp < Sinatra::Base
       format:      "email"
 
     res.link(:get) do |link|
-      link.title = "Info"
-      link.rel = "self"
-      link.description = "Info for account"
+      link.title       "Info"
+      link.rel         "self"
+      link.description "Info for account"
       link.action do
         { email: "foo@bar.com" }
       end
     end
 
     res.link(:post) do |link|
-      link.title = "Create"
-      link.rel = "create"
-      link.description = "Create a new account"
-      link.properties = [:email]
+      link.title         "Create"
+      link.rel           "create"
+      link.description   "Create a new account"
       link.action do |params|
         { email: params[:email] }
       end

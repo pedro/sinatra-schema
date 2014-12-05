@@ -22,9 +22,9 @@ module Sinatra
         end
 
         def link(method, href="/", &blk)
-          href = "#{resource.path}/#{href.chomp("/")}".chomp("/")
-          link = Link.new(resource: resource, method: method, href: href)
-          yield(link)
+          dsl = DSL::Links.new(resource: resource, method: method, href: href)
+          blk.call(dsl)
+          link = dsl.link
           link.register(app)
           resource.links << link
         end

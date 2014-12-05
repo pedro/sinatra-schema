@@ -1,20 +1,12 @@
 module Sinatra
   module Schema
     class Link
-      attr_accessor :resource, :title, :description, :href, :method, :properties, :rel, :action
+      attr_accessor :action_block, :resource, :title, :description, :href, :method, :properties, :rel
 
       def initialize(options)
         @resource = options[:resource]
         @method   = options[:method]
         @href     = options[:href]
-      end
-
-      def action(&blk)
-        @action = blk
-      end
-
-      def action_block
-        @action
       end
 
       def register(app)
