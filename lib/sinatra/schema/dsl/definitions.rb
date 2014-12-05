@@ -12,6 +12,8 @@ module Sinatra
           add Definition.new(options.merge(id: id, type: "string"))
         end
 
+        # TODO support other types
+
         protected
 
         def add(definition)
