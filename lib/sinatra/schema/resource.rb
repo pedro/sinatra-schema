@@ -10,6 +10,14 @@ module Sinatra
         @defs  = {}
       end
 
+      def id
+        @id ||= ActiveSupport::Inflector.singularize(path.split("/").last).to_sym
+      end
+
+      def title
+        @title ||= ActiveSupport::Inflector.singularize(path.split("/").last).capitalize
+      end
+
       def define(id)
         @defs[id] = Definition.new
         yield @defs[id]

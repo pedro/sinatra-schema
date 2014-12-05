@@ -6,8 +6,6 @@ class TestApp < Sinatra::Base
   end
 
   resource("/accounts") do |res|
-    res.id = :account
-    res.title = "Account"
     res.description = "An account represents an individual signed up to use the service"
 
     res.define(:email) do |d|

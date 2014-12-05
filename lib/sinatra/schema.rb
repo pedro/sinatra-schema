@@ -1,3 +1,4 @@
+require "active_support/inflector"
 require "sinatra"
 require "multi_json"
 
