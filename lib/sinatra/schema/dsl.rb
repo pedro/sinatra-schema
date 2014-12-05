@@ -1,10 +1,11 @@
 module Sinatra
   module Schema
     class DSL
-      attr_accessor :resource
+      attr_accessor :app, :resource
 
       def initialize(app, path)
-        @resource = Resource.new(app: app, path: path)
+        @app      = app
+        @resource = Resource.new(path: path)
       end
 
       def description(new_description)
@@ -24,7 +25,7 @@ module Sinatra
         href = "#{resource.path}/#{href.chomp("/")}".chomp("/")
         link = Link.new(resource: resource, method: method, href: href)
         yield(link)
-        link.register(resource.app)
+        link.register(app)
         resource.links << link
       end
     end

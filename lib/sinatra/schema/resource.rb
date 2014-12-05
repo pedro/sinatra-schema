@@ -1,10 +1,9 @@
 module Sinatra
   module Schema
     class Resource
-      attr_accessor :app, :id, :path, :title, :defs, :links, :description, :properties
+      attr_accessor :id, :path, :title, :defs, :links, :description, :properties
 
       def initialize(options)
-        @app   = options.fetch(:app)
         @path  = options.fetch(:path).chomp("/")
         @links = []
         @defs  = {}

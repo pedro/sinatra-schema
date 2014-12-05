@@ -1,9 +1,7 @@
 require "spec_helper"
 
 describe Sinatra::Schema::Resource do
-  let(:app)      { Sinatra.new }
-  let(:options)  {{ app: app, path: "/artists" }}
-  let(:resource) { Sinatra::Schema::Resource.new(options) }
+  let(:resource) { Sinatra::Schema::Resource.new(path: "/artists") }
 
   describe "#id" do
     it "is inferred from the path" do
