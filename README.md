@@ -11,15 +11,14 @@ Register `Sinatra::Schema` and define resources like:
 class MyApi < Sinatra::Base
   register Sinatra::Schema
 
-  resource("/accounts") do
-    title "Account"
-    description "The account of a user signed up to our service"
+  resource("/artists") do
+    description "A film artist like Nicolas Cage or Meryl Streep"
 
     res.link(:post) do
       title "Create"
-      description "Create a new account"
+      description "Add artist"
       action do
-        Account.create(email: params[:email])
+        Artist.create(email: params[:email])
       end
     end
   end
