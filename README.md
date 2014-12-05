@@ -5,28 +5,58 @@ Define a schema for your Sinatra application to get requests and responses valid
 
 ## Usage
 
-Register `Sinatra::Schema` and define resources like:
+Register `Sinatra::Schema` to define your resource like:
 
 ```ruby
 class MyApi < Sinatra::Base
   register Sinatra::Schema
 
-  resource("/artists") do
-    description "A film artist like Nicolas Cage or Meryl Streep"
-    property.text :name, description: "The artist's name", example: "Nicolas Cage"
+  resource("/account") do |res|
+    # every link below should serialize according to this:
+    res.property.text :email
 
-    res.link(:post) do
-      title "Create"
-      description "Add artist"
-      param.ref  :name # required by default
-      param.date :birth, description: "Date of birth", optional: true
-
-      action do
-        artist = Artist.create(name: params[:name])
-        { name: artist.name }
+    res.link(:get) do |link|
+      link.action do
+        # Sinatra::Schema will render this to json:
+        { email: current_user.email }
       end
     end
   end
+end
+```
+
+### Declare params
+
+Links can have properties too:
+
+```ruby
+resource("/account") do |res|
+  # every link below should serialize according to this:
+  res.property.text :email
+
+  res.link(:post) do |link|
+    link.property.ref :email # point to the property linked above
+    link.property.boolean :admin, optional: true
+
+    link.action do
+      # Sinatra::Schema will validate params according to the properties above
+      { email: current_user.email }
+    end
+  end
+```
+
+### Cross-resource params
+
+Reuse properties from other resources when appropriate:
+
+```ruby
+resource("/artists") do
+  res.property.text :name, description: "Artist name"
+end
+
+resource("/albums") do
+  rest.property.text :name, description: "Album name"
+  res.property.ref :artist_name, "artists/name"
 end
 ```
 
@@ -37,7 +67,7 @@ There are [lots of reasons why you should consider describe your API with a mach
 
 - Describe what endpoints are available
 - Validate requests and responses
-- Embrace constraints to make sure your API design is consistent
+- Embrace constraints for consistent API design
 - Generate documentation
 - Generate clients
 - Generate service stubs
