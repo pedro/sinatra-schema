@@ -3,9 +3,9 @@ module Sinatra
     class Resource
       attr_accessor :id, :path, :title, :description, :properties
 
-      def initialize(app, path)
-        @app   = app
-        @path  = path.chomp("/")
+      def initialize(options)
+        @app   = options.fetch(:app)
+        @path  = options.fetch(:path).chomp("/")
         @links = []
         @defs  = {}
       end
