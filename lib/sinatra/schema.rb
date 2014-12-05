@@ -20,10 +20,27 @@ module Sinatra
       def register(app)
         link = self
         app.send(method.downcase, href) do
-          res = link.action_block.call(params)
-          link.resource.validate_response!(res)
-          MultiJson.encode(res)
+          begin
+            link.validate_params!(params)
+            res = link.action_block.call(params)
+            link.resource.validate_response!(res)
+            MultiJson.encode(res)
+          rescue RuntimeError => e
+            halt(400)
+          end
         end
+      end
+
+      def validate_params!(params)
+        unless properties
+          if params.empty?
+            return
+          else
+            raise "Did not expect params"
+          end
+        end
+
+        Utils.validate_keys!(properties, params)
       end
     end
 
@@ -59,15 +76,7 @@ module Sinatra
           raise "Response should return a hash"
         end
 
-        missing = properties.map(&:to_s).sort - res.keys.map(&:to_s).sort
-        unless missing.empty?
-          raise "Missing properties: #{missing}"
-        end
-
-        extra = res.keys.map(&:to_s).sort - properties.map(&:to_s).sort
-        unless extra.empty?
-          raise "Unexpected properties: #{extra}"
-        end
+        Utils.validate_keys!(properties, res)
       end
 
       def to_schema
@@ -75,6 +84,20 @@ module Sinatra
           title: title,
           description: description
         }
+      end
+    end
+
+    class Utils
+      def self.validate_keys!(expected, received)
+        missing = expected.map(&:to_s).sort - received.keys.map(&:to_s).sort
+        unless missing.empty?
+          raise "Missing properties: #{missing}"
+        end
+
+        extra = received.keys.map(&:to_s).sort - expected.map(&:to_s).sort
+        unless extra.empty?
+          raise "Unexpected properties: #{extra}"
+        end
       end
     end
 
