@@ -4,7 +4,7 @@ require "singleton"
 require "multi_json"
 
 require "sinatra/schema/definition"
-require "sinatra/schema/dsl"
+require "sinatra/schema/dsl/resources"
 require "sinatra/schema/link"
 require "sinatra/schema/resource"
 require "sinatra/schema/root"
@@ -27,11 +27,11 @@ module Sinatra
     end
 
     def schema_root
-      Sinatra::Schema::Root.instance
+      Root.instance
     end
 
     def resource(path)
-      spec = DSL.new(self, path)
+      spec = DSL::Resources.new(self, path)
       yield(spec)
       schema_root.add_resource(spec.resource)
     end
