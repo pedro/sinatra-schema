@@ -13,10 +13,10 @@ describe Sinatra::Schema::DSL::Definitions do
   end
 
   describe "#ref" do
+    let(:definition) { Sinatra::Schema::Definition.new }
     before { options[:serialize] = true }
 
     it "adds a reference to another definition in the resource" do
-      definition = Sinatra::Schema::Definition.new
       resource.defs[:foobar] = definition
       dsl.ref :foobar
       assert_equal 1, resource.defs.size
@@ -26,7 +26,6 @@ describe Sinatra::Schema::DSL::Definitions do
     it "adds a reference to a definition in a different resource" do
       other = Sinatra::Schema::Resource.new(path: "/others")
       root.add_resource(other)
-      definition = Sinatra::Schema::Definition.new
       other.defs[:foobar] = definition
       dsl.ref "other/foobar"
       assert_equal 1, other.defs.size
