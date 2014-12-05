@@ -39,8 +39,7 @@ resource("/account") do |res|
     link.property.boolean :admin, optional: true
 
     link.action do
-      # Sinatra::Schema will validate params according to the properties above
-      { email: current_user.email }
+      User.create(email: params[:email])
     end
   end
 ```
