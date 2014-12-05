@@ -4,9 +4,10 @@ module Sinatra
       attr_accessor :id, :path, :title, :defs, :links, :description, :properties
 
       def initialize(options)
-        @path  = options.fetch(:path).chomp("/")
-        @links = []
-        @defs  = {}
+        @path       = options.fetch(:path).chomp("/")
+        @links      = []
+        @defs       = {}
+        @properties = []
       end
 
       def id
@@ -22,7 +23,7 @@ module Sinatra
           raise "Response should return a hash"
         end
 
-        if properties
+        unless properties.empty?
           Utils.validate_keys!(properties, res)
         end
       end
