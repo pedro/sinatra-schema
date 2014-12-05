@@ -21,14 +21,13 @@ class SinatraSchemeTest < Sinatra::Base
     end
 
     res.properties = [:email]
-    res.serializer = lambda { |x| { email: x }}
 
     res.link(:get) do |link|
       link.title = "Info"
       link.rel = "self"
       link.description = "Info for account"
       link.action do
-        "foo@bar.com"
+        { email: "foo@bar.com" }
       end
     end
 
@@ -38,7 +37,7 @@ class SinatraSchemeTest < Sinatra::Base
       link.description = "Create a new account"
       link.properties = [:email]
       link.action do |params|
-        params[:email]
+        { email: params[:email] }
       end
     end
   end

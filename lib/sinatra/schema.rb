@@ -21,9 +21,8 @@ module Sinatra
         link = self
         app.send(method.downcase, href) do
           res = link.action_block.call(params)
-          serialized = link.resource.serialize(res)
-          link.resource.validate_response!(serialized)
-          MultiJson.encode(serialized)
+          link.resource.validate_response!(res)
+          MultiJson.encode(res)
         end
       end
     end
@@ -33,7 +32,7 @@ module Sinatra
     end
 
     class Resource
-      attr_accessor :id, :path, :title, :description, :properties, :serializer
+      attr_accessor :id, :path, :title, :description, :properties
 
       def initialize(app, path)
         @app   = app
@@ -57,7 +56,7 @@ module Sinatra
 
       def validate_response!(res)
         unless res.is_a?(Hash)
-          raise "Serializer should return a hash"
+          raise "Response should return a hash"
         end
 
         missing = properties.map(&:to_s).sort - res.keys.map(&:to_s).sort
@@ -69,10 +68,6 @@ module Sinatra
         unless extra.empty?
           raise "Unexpected properties: #{extra}"
         end
-      end
-
-      def serialize(response)
-        serializer.call(response)
       end
 
       def to_schema
