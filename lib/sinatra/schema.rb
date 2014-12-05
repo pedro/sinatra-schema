@@ -10,6 +10,8 @@ module Sinatra
   module Schema
     def self.registered(app)
       app.get "/schema" do
+        content_type("application/schema+json")
+        response.headers["Cache-Control"] = "public, max-age=3600"
         MultiJson.encode(
           "$schema" => "http://json-schema.org/draft-04/hyper-schema",
           "definitions" => app.resources.inject({}) { |result, (id, resource)|
@@ -29,7 +31,6 @@ module Sinatra
       yield(res)
       resources[res.id] = res
     end
-
   end
 
   register Schema
