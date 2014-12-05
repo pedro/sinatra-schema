@@ -8,8 +8,23 @@ module Sinatra
         @resource = Resource.new(path: path)
       end
 
-      def description(new_description)
-        @resource.description = new_description
+      def description(description)
+        @resource.description = description
+      end
+
+      class DefinitionTypeDSL
+        def initialize(resource)
+          @resource = resource
+        end
+
+        def text(id, options={})
+          definition = Definition.new(options.merge(id: id))
+          @resource.defs[definition.id] = definition
+        end
+      end
+
+      def property
+        DefinitionTypeDSL.new(resource)
       end
 
       def define(id)
