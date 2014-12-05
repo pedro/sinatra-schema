@@ -1,7 +1,7 @@
 module Sinatra
   module Schema
     class Resource
-      attr_accessor :id, :path, :title, :description, :properties
+      attr_accessor :app, :id, :path, :title, :defs, :links, :description, :properties
 
       def initialize(options)
         @app   = options.fetch(:app)
@@ -16,19 +16,6 @@ module Sinatra
 
       def title
         @title ||= ActiveSupport::Inflector.singularize(path.split("/").last).capitalize
-      end
-
-      def define(id)
-        @defs[id] = Definition.new
-        yield @defs[id]
-      end
-
-      def link(method, href="/", &blk)
-        href = "#{path}/#{href.chomp("/")}".chomp("/")
-        link = Link.new(resource: self, method: method, href: href)
-        yield(link)
-        link.register(@app)
-        @links << link
       end
 
       def validate_response!(res)

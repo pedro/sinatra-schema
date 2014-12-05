@@ -6,7 +6,7 @@ class TestApp < Sinatra::Base
   end
 
   resource("/accounts") do |res|
-    res.description = "An account represents an individual signed up to use the service"
+    res.description "An account represents an individual signed up to use the service"
 
     res.define(:email) do |d|
       d.description = "unique email address of account"
@@ -15,7 +15,7 @@ class TestApp < Sinatra::Base
       d.type = :string
     end
 
-    res.properties = [:email]
+    res.properties [:email]
 
     res.link(:get) do |link|
       link.title = "Info"
