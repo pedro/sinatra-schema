@@ -1,4 +1,4 @@
-require "test_helper"
+require "spec_helper"
 
 describe SinatraSchemeTest do
   it "still works as a regular sinatra app" do

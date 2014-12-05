@@ -5,13 +5,12 @@ require 'bundler'
 
 Bundler.require(:default, :test)
 
-require 'minitest/spec'
-require 'minitest/autorun'
 require 'sinatra'
 require './app'
 
-class MiniTest::Spec
-  include Rack::Test::Methods
+RSpec.configure do |config|
+  config.include Rack::Test::Methods
+  config.expect_with :minitest
 
   def app
     SinatraSchemeTest
