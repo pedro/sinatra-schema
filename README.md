@@ -14,7 +14,6 @@ class MyApi < Sinatra::Base
   resource("/accounts") do
     title "Account"
     description "The account of a user signed up to our service"
-    serializer AccountSerializer
 
     res.link(:post) do
       title "Create"
