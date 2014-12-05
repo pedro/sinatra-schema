@@ -33,7 +33,7 @@ module Sinatra
           end
         end
 
-        Utils.validate_keys!(properties.map(&:id), params)
+        Utils.validate_keys!(properties, params)
       end
     end
   end

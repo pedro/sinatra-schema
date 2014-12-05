@@ -24,7 +24,7 @@ module Sinatra
         end
 
         unless properties.empty?
-          Utils.validate_keys!(properties.map(&:id), res)
+          Utils.validate_keys!(properties, res)
         end
       end
 
