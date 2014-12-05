@@ -26,6 +26,7 @@ class TestApp < Sinatra::Base
       link.title         "Create"
       link.rel           "create"
       link.description   "Create a new account"
+      link.property.text :email
       link.action do |params|
         { email: params[:email] }
       end

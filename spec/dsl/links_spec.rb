@@ -25,4 +25,17 @@ describe Sinatra::Schema::DSL::Links do
     dsl.action(&action)
     assert_equal action, dsl.link.action_block
   end
+
+  describe "#property" do
+    it "adds new properties to the resource" do
+      dsl.property.text :foo
+      assert_equal 1, resource.defs.size
+      assert resource.defs.has_key?(:foo)
+    end
+
+    it "makes them a property of the link" do
+      dsl.property.text :foo
+      assert_equal [:foo], dsl.link.properties
+    end
+  end
 end

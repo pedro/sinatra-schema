@@ -27,6 +27,10 @@ module Sinatra
           link.action_block = blk
         end
 
+        def property
+          DSL::Definitions.new(resource, link: link, serialize: false)
+        end
+
         protected
 
         def build_link

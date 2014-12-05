@@ -4,9 +4,10 @@ module Sinatra
       attr_accessor :action_block, :resource, :title, :description, :href, :method, :properties, :rel
 
       def initialize(options)
-        @resource = options[:resource]
-        @method   = options[:method]
-        @href     = options[:href]
+        @resource   = options[:resource]
+        @method     = options[:method]
+        @href       = options[:href]
+        @properties = []
       end
 
       def register(app)
@@ -24,7 +25,7 @@ module Sinatra
       end
 
       def validate_params!(params)
-        unless properties
+        if properties.empty?
           if params.empty?
             return
           else

@@ -2,14 +2,17 @@ module Sinatra
   module Schema
     module DSL
       class Definitions
-        attr_accessor :resource
+        attr_accessor :definition, :resource, :options
 
-        def initialize(resource)
+        def initialize(resource, options={})
+          @options  = options
           @resource = resource
         end
 
-        def text(id, options={})
-          add Definition.new(options.merge(id: id, type: "string"))
+        def text(id, local_options={})
+          def_options = options.merge(local_options)
+          def_options.merge!(id: id, type: "string")
+          add Definition.new(def_options)
         end
 
         # TODO support other types
@@ -18,6 +21,9 @@ module Sinatra
 
         def add(definition)
           @resource.defs[definition.id] = definition
+          if link = options[:link]
+            link.properties << definition.id
+          end
         end
       end
     end
