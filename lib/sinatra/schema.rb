@@ -1,3 +1,6 @@
+require "sinatra"
+require "multi_json"
+
 require "sinatra/schema/definition"
 require "sinatra/schema/link"
 require "sinatra/schema/resource"

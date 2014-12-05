@@ -3,8 +3,9 @@ ENV["RACK_ENV"] = "test"
 require "rubygems"
 require "bundler"
 
-Bundler.require(:default, :test)
+Bundler.require
 
+require "rack/test"
 require "sinatra"
 require "sinatra/schema"
 
