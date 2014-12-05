@@ -15,12 +15,21 @@ module Sinatra
           add Definition.new(def_options)
         end
 
+        def ref(id)
+          unless definition = resource.defs[id] || Sinatra::Schema::Root.instance.find_definition(id)
+            raise "Unknown reference: #{id}"
+          end
+          add definition, true
+        end
+
         # TODO support other types
 
         protected
 
-        def add(definition)
-          @resource.defs[definition.id] = definition
+        def add(definition, reference=false)
+          unless reference
+            @resource.defs[definition.id] = definition
+          end
           if options[:serialize]
             @resource.properties << definition
           end

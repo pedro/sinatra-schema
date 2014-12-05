@@ -3,7 +3,7 @@ module Sinatra
     class Definition
       attr_accessor :description, :example, :format, :id, :type
 
-      def initialize(options)
+      def initialize(options={})
         @description = options[:description]
         @example     = options[:example]
         @id          = options[:id]
