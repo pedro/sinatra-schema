@@ -35,7 +35,7 @@ describe Sinatra::Schema::DSL::Links do
 
     it "makes them a property of the link" do
       dsl.property.text :foo
-      assert_equal [:foo], dsl.link.properties
+      assert_equal [:foo], dsl.link.properties.map(&:id)
     end
   end
 end

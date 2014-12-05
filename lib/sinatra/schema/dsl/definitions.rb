@@ -22,10 +22,10 @@ module Sinatra
         def add(definition)
           @resource.defs[definition.id] = definition
           if options[:serialize]
-            @resource.properties << definition.id
+            @resource.properties << definition
           end
           if link = options[:link]
-            link.properties << definition.id
+            link.properties << definition
           end
         end
       end
