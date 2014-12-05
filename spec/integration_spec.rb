@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe SinatraSchemeTest do
+describe Sinatra::Schema do
   it "still works as a regular sinatra app" do
     get "/regular"
     assert_equal 200, last_response.status
@@ -35,7 +35,7 @@ describe SinatraSchemeTest do
     assert_equal Hash, schema["definitions"].class
     assert_equal Hash, schema["definitions"]["account"].class
     assert_equal "Account", schema["definitions"]["account"]["title"]
-    assert_equal "An account represents an individual signed up to use the Heroku platform.",
+    assert_equal "An account represents an individual signed up to use the service",
       schema["definitions"]["account"]["description"]
   end
 end

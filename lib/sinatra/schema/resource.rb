@@ -28,7 +28,9 @@ module Sinatra
           raise "Response should return a hash"
         end
 
-        Utils.validate_keys!(properties, res)
+        if properties
+          Utils.validate_keys!(properties, res)
+        end
       end
 
       def to_schema

@@ -1,7 +1,4 @@
-require "sinatra"
-require "./lib/sinatra/schema"
-
-class SinatraSchemeTest < Sinatra::Base
+class TestApp < Sinatra::Base
   register Sinatra::Schema
 
   get "/regular" do
@@ -11,7 +8,7 @@ class SinatraSchemeTest < Sinatra::Base
   resource("/accounts") do |res|
     res.id = :account
     res.title = "Account"
-    res.description = "An account represents an individual signed up to use the Heroku platform."
+    res.description = "An account represents an individual signed up to use the service"
 
     res.define(:email) do |d|
       d.description = "unique email address of account"
