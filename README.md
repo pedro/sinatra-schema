@@ -18,8 +18,8 @@ class MyApi < Sinatra::Base
     res.link(:post) do
       title "Create"
       description "Add artist"
-      property.ref :name # required by default
-      property.date "Date of birth", optional: true
+      param.ref  :name # required by default
+      param.date :birth, description: "Date of birth", optional: true
 
       action do
         artist = Artist.create(name: params[:name])
