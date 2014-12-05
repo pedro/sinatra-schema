@@ -7,14 +7,14 @@ describe Sinatra::Schema do
     assert_equal "hi", last_response.body
   end
 
-  it "support resource links" do
+  it "support resource gets" do
     get "/accounts"
     assert_equal 200, last_response.status
     assert_equal({ "email" => "foo@bar.com" },
       MultiJson.decode(last_response.body))
   end
 
-  it "support resource links" do
+  it "support resource posts" do
     post "/accounts", email: "omg"
     assert_equal 200, last_response.status
     assert_equal({ "email" => "omg" },
