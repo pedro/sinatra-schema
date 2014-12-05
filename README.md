@@ -13,12 +13,17 @@ class MyApi < Sinatra::Base
 
   resource("/artists") do
     description "A film artist like Nicolas Cage or Meryl Streep"
+    property.text :name, description: "The artist's name", example: "Nicolas Cage"
 
     res.link(:post) do
       title "Create"
       description "Add artist"
+      property.ref :name # required by default
+      property.date "Date of birth", optional: true
+
       action do
-        Artist.create(email: params[:email])
+        artist = Artist.create(name: params[:name])
+        { name: artist.name }
       end
     end
   end
