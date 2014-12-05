@@ -27,7 +27,7 @@ describe Sinatra::Schema::DSL::Links do
   end
 
   describe "#property" do
-    it "adds new properties to the resource" do
+    it "adds new definiitons to the resource" do
       dsl.property.text :foo
       assert_equal 1, resource.defs.size
       assert resource.defs.has_key?(:foo)
