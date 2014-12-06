@@ -1,5 +1,8 @@
 # Sinatra Schema
 
+[![Gem version](http://img.shields.io/gem/v/multi_json.svg)][https://rubygems.org/gems/sinatra-schema]
+[![Build Status](https://travis-ci.org/pedro/sinatra-schema.svg?branch=master)](https://travis-ci.org/pedro/sinatra-schema)
+
 Define a schema for your Sinatra application to get requests and responses validated. Dump it schema as a JSON Schema to aid client generation and more!
 
 **Under design**. The reference below might be outdated – please check specs to see the latest.
