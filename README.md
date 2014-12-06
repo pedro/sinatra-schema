@@ -27,6 +27,34 @@ class MyApi < Sinatra::Base
 end
 ```
 
+### JSON Schema
+
+The extension will serve a JSON Schema dump for you. For instance, booting the app above:
+
+```
+$ curl localhost:5000/schema
+{
+  "$schema":"http://json-schema.org/draft-04/hyper-schema",
+  "definitions":{
+    "account":{
+      "title":"Account",
+      "type":"object",
+      "definitions":{
+        "email":{
+          "type":"string"
+        }
+      },
+      "links":[
+        {
+          "href":"/account",
+          "method":"GET"
+        }
+      ]
+    }
+  }
+}
+```
+
 ### Declare params
 
 Links can have properties too:
