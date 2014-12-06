@@ -51,12 +51,12 @@ resource("/account") do |res|
 Reuse properties from other resources when appropriate:
 
 ```ruby
-resource("/artists") do
+resource("/artists") do |res|
   res.property.text :name, description: "Artist name"
 end
 
-resource("/albums") do
-  rest.property.text :name, description: "Album name"
+resource("/albums") do |res|
+  res.property.text :name, description: "Album name"
   res.property.ref :artist_name, "artists/name"
 end
 ```
