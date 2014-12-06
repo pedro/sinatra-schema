@@ -15,6 +15,12 @@ module Sinatra
           add Definition.new(def_options)
         end
 
+        def bool(id, local_options={})
+          def_options = options.merge(local_options)
+          def_options.merge!(id: id, type: "boolean")
+          add Definition.new(def_options)
+        end
+
         def ref(id)
           unless definition = resource.defs[id] || Sinatra::Schema::Root.instance.find_definition(id)
             raise "Unknown reference: #{id}"

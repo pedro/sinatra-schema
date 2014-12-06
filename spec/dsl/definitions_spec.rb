@@ -12,6 +12,12 @@ describe Sinatra::Schema::DSL::Definitions do
     assert_equal "string", resource.defs[:foobar].type
   end
 
+  it "adds a boolean definition to the resource" do
+    dsl.bool(:foobar)
+    assert_equal 1, resource.defs.size
+    assert_equal "boolean", resource.defs[:foobar].type
+  end
+
   describe "#ref" do
     let(:definition) { Sinatra::Schema::Definition.new }
     before { options[:serialize] = true }
