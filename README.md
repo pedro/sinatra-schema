@@ -66,9 +66,19 @@ end
 
 ### JSON Schema
 
-The extension will serve a JSON Schema dump at `GET /schema` for you. For the app above it looks like this:
+The extension will serve a JSON Schema dump at `GET /schema` for you.
 
-```json
+You can also include the `schema` Rake task to print it out. From your Rakefile:
+
+```
+require "./app" # load your app to have the endpoints defined
+load "sinatra/schema/tasks/schema.rake"
+```
+
+Then dump it like:
+
+```
+$ rake schema
 {
   "$schema":"http://json-schema.org/draft-04/hyper-schema",
   "definitions":{
