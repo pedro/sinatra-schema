@@ -1,9 +1,9 @@
 require "spec_helper"
 
-describe Sinatra::Schema::ParamHandling do
+describe Sinatra::Schema::ParamParsing do
   before do
     @rack_app = Sinatra.new do
-      helpers Sinatra::Schema::ParamHandling
+      helpers Sinatra::Schema::ParamParsing
       post("/") do
         MultiJson.encode(parse_params($properties))
       end

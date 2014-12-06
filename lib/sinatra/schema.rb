@@ -5,7 +5,7 @@ require "multi_json"
 
 require "sinatra/schema/definition"
 require "sinatra/schema/link"
-require "sinatra/schema/param_handling"
+require "sinatra/schema/param_parsing"
 require "sinatra/schema/param_validation"
 require "sinatra/schema/resource"
 require "sinatra/schema/root"
@@ -17,7 +17,7 @@ require "sinatra/schema/dsl/resources"
 module Sinatra
   module Schema
     def self.registered(app)
-      app.helpers ParamHandling
+      app.helpers ParamParsing
       app.helpers ParamValidation
       app.get "/schema" do
         content_type("application/schema+json")

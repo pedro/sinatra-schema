@@ -1,6 +1,6 @@
 module Sinatra
   module Schema
-    module ParamHandling
+    module ParamParsing
       def parse_params(properties)
         case request.media_type
         when nil, "application/json"
