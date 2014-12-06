@@ -7,7 +7,7 @@ module Sinatra
         @resource   = options[:resource]
         @method     = options[:method]
         @href       = options[:href]
-        @properties = []
+        @properties = {}
       end
 
       def register(app)

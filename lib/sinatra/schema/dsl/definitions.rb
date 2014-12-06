@@ -37,10 +37,10 @@ module Sinatra
             @resource.defs[definition.id] = definition
           end
           if options[:serialize]
-            @resource.properties << definition
+            @resource.properties[definition.id] = definition
           end
           if link = options[:link]
-            link.properties << definition
+            link.properties[definition.id] = definition
           end
         end
       end

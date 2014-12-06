@@ -18,7 +18,8 @@ describe Sinatra::Schema::DSL::Resources do
 
     it "makes them a property of the resource" do
       dsl.property.text :foo
-      assert_equal [:foo], dsl.resource.properties.map(&:id)
+      assert_equal 1, dsl.resource.properties.size
+      assert dsl.resource.properties.has_key?(:foo)
     end
   end
 end

@@ -2,12 +2,12 @@ module Sinatra
   module Schema
     class Utils
       def self.validate_keys!(properties, received)
-        missing = properties.map { |p| p.id.to_s }.sort - received.keys.map(&:to_s).sort
+        missing = properties.keys.map(&:to_s).sort - received.keys.map(&:to_s).sort
         unless missing.empty?
           raise "Missing properties: #{missing}"
         end
 
-        extra = received.keys.map(&:to_s).sort - properties.map { |p| p.id.to_s }.sort
+        extra = received.keys.map(&:to_s).sort - properties.keys.map(&:to_s).sort
         unless extra.empty?
           raise "Unexpected properties: #{extra}"
         end

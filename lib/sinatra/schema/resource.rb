@@ -7,7 +7,7 @@ module Sinatra
         @path       = options.fetch(:path).chomp("/")
         @links      = []
         @defs       = {}
-        @properties = []
+        @properties = {}
       end
 
       def id
