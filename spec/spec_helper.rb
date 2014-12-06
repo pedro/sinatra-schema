@@ -16,6 +16,6 @@ RSpec.configure do |config|
   config.expect_with :minitest
 
   def app
-    TestApp
+    @rack_app || TestApp
   end
 end

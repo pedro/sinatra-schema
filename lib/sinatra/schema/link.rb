@@ -14,8 +14,9 @@ module Sinatra
         link = self
         app.send(method.downcase, href) do
           begin
-            link.validate_params!(params)
-            res = link.action_block.call(params)
+            schema_params = parse_params(link.properties)
+            link.validate_params!(schema_params)
+            res = link.action_block.call(schema_params)
             link.resource.validate_response!(res)
             res
           rescue RuntimeError => e

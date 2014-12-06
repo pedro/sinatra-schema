@@ -9,6 +9,18 @@ module Sinatra
         @id          = options[:id]
         @type        = options[:type]
       end
+
+      def cast(value)
+        # do not touch nulls:
+        return unless value
+
+        case type
+        when "string"
+          value.to_s
+        when "boolean"
+          %w( t true 1 ).include?(value.to_s)
+        end
+      end
     end
   end
 end
