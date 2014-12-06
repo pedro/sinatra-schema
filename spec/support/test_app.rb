@@ -18,7 +18,7 @@ class TestApp < Sinatra::Base
       link.rel         "self"
       link.description "Info for account"
       link.action do
-        { email: "foo@bar.com" }
+        MultiJson.encode(email: "foo@bar.com")
       end
     end
 
@@ -28,7 +28,7 @@ class TestApp < Sinatra::Base
       link.description   "Create a new account"
       link.property.ref :email
       link.action do |params|
-        { email: params[:email] }
+        MultiJson.encode(email: params[:email])
       end
     end
   end

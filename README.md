@@ -22,8 +22,7 @@ class MyApi < Sinatra::Base
 
     res.link(:get) do |link|
       link.action do
-        # Sinatra::Schema will render this to json:
-        { email: current_user.email }
+        MultiJson.encode(email: current_user.email)
       end
     end
   end

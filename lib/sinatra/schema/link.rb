@@ -17,7 +17,7 @@ module Sinatra
             link.validate_params!(params)
             res = link.action_block.call(params)
             link.resource.validate_response!(res)
-            MultiJson.encode(res)
+            res
           rescue RuntimeError => e
             halt(400)
           end

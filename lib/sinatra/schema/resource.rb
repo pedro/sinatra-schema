@@ -18,7 +18,11 @@ module Sinatra
         @title ||= ActiveSupport::Inflector.singularize(path.split("/").last).capitalize
       end
 
-      def validate_response!(res)
+      def validate_response!(raw)
+        # only validate responses in tests
+        return unless ENV["RACK_ENV"] == "test"
+
+        res = MultiJson.decode(raw)
         unless res.is_a?(Hash)
           raise "Response should return a hash"
         end
