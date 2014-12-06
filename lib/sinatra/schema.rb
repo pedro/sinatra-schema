@@ -22,15 +22,7 @@ module Sinatra
       app.get "/schema" do
         content_type("application/schema+json")
         response.headers["Cache-Control"] = "public, max-age=3600"
-        MultiJson.encode(
-          {
-            "$schema" => "http://json-schema.org/draft-04/hyper-schema",
-            "definitions" => app.schema_root.resources.inject({}) { |result, (id, resource)|
-              result[id] = resource.to_schema
-              result
-            }
-          }, pretty: true
-        )
+        MultiJson.encode(app.schema_root.to_schema, pretty: true)
       end
     end
 

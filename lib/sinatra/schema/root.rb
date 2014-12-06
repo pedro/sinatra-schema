@@ -18,6 +18,16 @@ module Sinatra
         return unless resource = resources[resource_id.to_sym]
         resource.defs[def_id.to_sym]
       end
+
+      def to_schema
+        {
+          "$schema" => "http://json-schema.org/draft-04/hyper-schema",
+          "definitions" => resources.inject({}) { |result, (id, resource)|
+            result[id] = resource.to_schema
+            result
+          }
+        }
+      end
     end
   end
 end
