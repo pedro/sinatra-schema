@@ -11,6 +11,12 @@ module Sinatra
         unless extra.empty?
           raise "Unexpected properties: #{extra}"
         end
+
+        properties.each do |id, definition|
+          unless definition.valid?(received[id.to_s])
+            raise "Bad response property: #{id}"
+          end
+        end
       end
     end
   end

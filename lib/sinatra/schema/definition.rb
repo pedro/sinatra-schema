@@ -21,6 +21,18 @@ module Sinatra
           %w( t true 1 ).include?(value.to_s)
         end
       end
+
+      def valid?(value)
+        # always accept nils for now
+        return if value.nil?
+
+        case type
+        when "string"
+          value.is_a?(String)
+        when "boolean"
+          [true, false].include?(value)
+        end
+      end
     end
   end
 end

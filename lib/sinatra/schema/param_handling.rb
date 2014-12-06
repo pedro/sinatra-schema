@@ -12,6 +12,8 @@ module Sinatra
         end
       end
 
+      protected
+
       def parse_json_params
         body = request.body.read
         return {} if body.length == 0 # nothing supplied

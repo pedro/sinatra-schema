@@ -15,7 +15,7 @@ module Sinatra
         app.send(method.downcase, href) do
           begin
             schema_params = parse_params(link.properties)
-            link.validate_params!(schema_params)
+            validate_params!(schema_params, link.properties)
             res = link.action_block.call(schema_params)
             link.resource.validate_response!(res)
             res
@@ -23,18 +23,6 @@ module Sinatra
             halt(400)
           end
         end
-      end
-
-      def validate_params!(params)
-        if properties.empty?
-          if params.empty?
-            return
-          else
-            raise "Did not expect params"
-          end
-        end
-
-        Utils.validate_keys!(properties, params)
       end
     end
   end
