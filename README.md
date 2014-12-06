@@ -17,11 +17,11 @@ class MyApi < Sinatra::Base
   register Sinatra::Schema
 
   resource("/account") do |res|
-    # every link below should serialize these fields:
     res.property.text :email
 
     res.link(:get) do |link|
       link.action do
+        # note per definition above we need to serialize "email"
         MultiJson.encode(email: current_user.email)
       end
     end
@@ -29,7 +29,7 @@ class MyApi < Sinatra::Base
 end
 ```
 
-### Declare params
+### Params
 
 Links can have properties too:
 
@@ -38,13 +38,14 @@ resource("/account") do |res|
   res.property.text :email
 
   res.link(:post) do |link|
-    link.property.ref :email # reusing the property defined above
-    link.property.boolean :admin, optional: true
+    link.property.ref  :email # reuse the property defined above
+    link.property.bool :admin
 
     link.action do |params|
       user = User.new(email: params[:email])
       if params[:admin] # params are casted accordingly!
         # ...
+      end
     end
   end
 ```
