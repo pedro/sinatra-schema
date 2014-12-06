@@ -29,10 +29,9 @@ end
 
 ### JSON Schema
 
-The extension will serve a JSON Schema dump for you. For instance, booting the app above:
+The extension will serve a JSON Schema dump at `GET /schema` for you. For the app above it looks like this:
 
-```
-$ curl localhost:5000/schema
+```json
 {
   "$schema":"http://json-schema.org/draft-04/hyper-schema",
   "definitions":{
