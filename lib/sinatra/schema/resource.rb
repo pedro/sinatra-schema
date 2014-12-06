@@ -31,7 +31,22 @@ module Sinatra
       def to_schema
         {
           title: title,
-          description: description
+          description: description,
+          type: "object",
+          definitions: defs.inject({}) { |h, (id, definition)|
+            h[id] = {
+              description: definition.description,
+              type:        definition.type,
+            }
+            h
+          },
+          links: links.map { |link|
+            {
+              description: link.description,
+              href:        link.href,
+              method:      link.method.to_s.upcase,
+            }
+          }
         }
       end
     end
