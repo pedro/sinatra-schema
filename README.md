@@ -68,9 +68,9 @@ end
 
 The extension will serve a JSON Schema dump at `GET /schema` for you.
 
-You can also include the `schema` Rake task to print it out. From your Rakefile:
+You can also include the `schema` Rake task to print it out. To do so, add to your `Rakefile`:
 
-```
+```ruby
 require "./app" # load your app to have the endpoints defined
 load "sinatra/schema/tasks/schema.rake"
 ```
