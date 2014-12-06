@@ -17,7 +17,7 @@ class MyApi < Sinatra::Base
   register Sinatra::Schema
 
   resource("/account") do |res|
-    # every link below should serialize according to this:
+    # every link below should serialize these fields:
     res.property.text :email
 
     res.link(:get) do |link|
@@ -26,6 +26,41 @@ class MyApi < Sinatra::Base
       end
     end
   end
+end
+```
+
+### Declare params
+
+Links can have properties too:
+
+```ruby
+resource("/account") do |res|
+  res.property.text :email
+
+  res.link(:post) do |link|
+    link.property.ref :email # reusing the property defined above
+    link.property.boolean :admin, optional: true
+
+    link.action do |schema_params|
+      user = User.new(email: schema_params[:email])
+      if schema_param[:admin] # params are casted accordingly!
+        # ...
+    end
+  end
+```
+
+### Cross-resource params
+
+Reuse properties from other resources when appropriate:
+
+```ruby
+resource("/artists") do |res|
+  res.property.text :name, description: "Artist name"
+end
+
+resource("/albums") do |res|
+  res.property.text :name, description: "Album name"
+  res.property.ref :artist_name, "artists/name"
 end
 ```
 
@@ -54,40 +89,6 @@ The extension will serve a JSON Schema dump at `GET /schema` for you. For the ap
     }
   }
 }
-```
-
-### Declare params
-
-Links can have properties too:
-
-```ruby
-resource("/account") do |res|
-  # every link below should serialize according to this:
-  res.property.text :email
-
-  res.link(:post) do |link|
-    link.property.ref :email # point to the property linked above
-    link.property.boolean :admin, optional: true
-
-    link.action do
-      User.create(email: params[:email])
-    end
-  end
-```
-
-### Cross-resource params
-
-Reuse properties from other resources when appropriate:
-
-```ruby
-resource("/artists") do |res|
-  res.property.text :name, description: "Artist name"
-end
-
-resource("/albums") do |res|
-  res.property.text :name, description: "Album name"
-  res.property.ref :artist_name, "artists/name"
-end
 ```
 
 
