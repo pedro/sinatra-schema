@@ -41,9 +41,9 @@ resource("/account") do |res|
     link.property.ref :email # reusing the property defined above
     link.property.boolean :admin, optional: true
 
-    link.action do |schema_params|
-      user = User.new(email: schema_params[:email])
-      if schema_param[:admin] # params are casted accordingly!
+    link.action do |params|
+      user = User.new(email: params[:email])
+      if params[:admin] # params are casted accordingly!
         # ...
     end
   end
