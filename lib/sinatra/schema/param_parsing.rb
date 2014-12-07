@@ -8,7 +8,7 @@ module Sinatra
         when "application/x-www-form-urlencoded"
           cast_regular_params(properties)
         else
-          raise UnsupportedMediaType.new(request.media_type)
+          raise BadRequest.new("Unsupported media type: #{request.media_type}")
         end
       end
 
@@ -21,7 +21,7 @@ module Sinatra
         request.body.rewind # leave it ready for other calls
         supplied_params = MultiJson.decode(body)
         unless supplied_params.is_a?(Hash)
-          raise "Invalid request, expecting a hash"
+          raise BadRequest.new("Invalid JSON Request, please encode params as a hash")
         end
 
         indifferent_params(supplied_params)

@@ -9,9 +9,9 @@ module Sinatra
       end
     end
 
-    class UnsupportedMediaType < Error
-      def initialize(media_type)
-        super("Unsupported media type: #{media_type}")
+    class BadRequest < Error
+      def initialize(msg)
+        super(msg)
       end
     end
   end

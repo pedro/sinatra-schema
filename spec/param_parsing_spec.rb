@@ -21,6 +21,12 @@ describe Sinatra::Schema::ParamParsing do
       end
     end
 
+    it "handles params not serialized as a hash" do
+      assert_raises(Sinatra::Schema::BadRequest) do
+        post "/", MultiJson.encode(["lolllll"])
+      end
+    end
+
     it "considers an empty body an empty hash" do
       post "/", ""
       assert_equal Hash.new, last_json
@@ -73,7 +79,7 @@ describe Sinatra::Schema::ParamParsing do
   end
 
   it "errors out on other formats" do
-    assert_raises(Sinatra::Schema::UnsupportedMediaType) do
+    assert_raises(Sinatra::Schema::BadRequest) do
       header "Content-Type", "application/xml"
       post "/", "<omg />"
     end
