@@ -20,6 +20,16 @@ module Sinatra
           add Definition.new(options)
         end
 
+        def uuid(id, options={})
+          options.merge!(id: id, type: "uuid")
+          add Definition.new(options)
+        end
+
+        def email(id, options={})
+          options.merge!(id: id, type: "email")
+          add Definition.new(options)
+        end
+
         def nested(id)
           # add a space in the definitions/properties for the nested def:
           targets.each { |h| h[id] = {} }

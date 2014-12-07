@@ -27,10 +27,22 @@ describe Sinatra::Schema::Definition do
       refute definition.valid?("true")
     end
 
+    it "detects emails" do
+      definition.type = "email"
+      assert definition.valid?("foo@bar.com")
+      refute definition.valid?("foobar.com")
+    end
+
     it "detects text" do
       definition.type = "string"
       assert definition.valid?("foo")
       refute definition.valid?(123)
+    end
+
+    it "detects uuids" do
+      definition.type = "uuid"
+      assert definition.valid?(SecureRandom.uuid)
+      refute definition.valid?("wrong")
     end
   end
 end

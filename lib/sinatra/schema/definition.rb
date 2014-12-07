@@ -1,7 +1,7 @@
 module Sinatra
   module Schema
     class Definition
-      attr_accessor :description, :example, :format, :id, :type
+      attr_accessor :description, :example, :id, :type
 
       def initialize(options={})
         @description = options[:description]
@@ -15,10 +15,10 @@ module Sinatra
         return unless value
 
         case type
-        when "string"
-          value.to_s
         when "boolean"
           %w( t true 1 ).include?(value.to_s)
+        when "email", "string", "uuid"
+          value.to_s
         end
       end
 
@@ -27,10 +27,14 @@ module Sinatra
         return if value.nil?
 
         case type
-        when "string"
-          value.is_a?(String)
         when "boolean"
           [true, false].include?(value)
+        when "email"
+          value.to_s =~ /\A[^@\s]+@([^@\s]+\.)+[^@\s]+\z/
+        when "string"
+          value.is_a?(String)
+        when "uuid"
+          value.to_s =~ /\A[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}\Z/
         end
       end
     end
