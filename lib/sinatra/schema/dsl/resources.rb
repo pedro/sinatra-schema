@@ -14,7 +14,7 @@ module Sinatra
         end
 
         def property
-          DSL::Definitions.new(resource, serialize: true)
+          DSL::Definitions.new(resource, [resource.defs, resource.properties])
         end
 
         def link(method, href="/", &blk)

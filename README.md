@@ -65,6 +65,20 @@ resource("/albums") do |res|
 end
 ```
 
+### Nested params
+
+These are also casted and validated as you'd expect:
+
+```ruby
+resource("/albums") do |res|
+  resource.link(:post) do |link|
+    link.nested :artist do |a|
+      a.property.text :name
+    end
+  end
+end
+```
+
 ### JSON Schema
 
 The extension will serve a JSON Schema dump at `GET /schema` for you.

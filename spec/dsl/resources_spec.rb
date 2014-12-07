@@ -21,5 +21,13 @@ describe Sinatra::Schema::DSL::Resources do
       assert_equal 1, dsl.resource.properties.size
       assert dsl.resource.properties.has_key?(:foo)
     end
+
+    it "supports nested properties" do
+      dsl.property.nested :user do |prop|
+        prop.text :email
+        prop.bool :admin
+      end
+      assert_equal 2, dsl.resource.properties[:user].size
+    end
   end
 end

@@ -2,8 +2,7 @@ require "spec_helper"
 
 describe Sinatra::Schema::DSL::Definitions do
   let(:resource) { Sinatra::Schema::Resource.new(path: "/foobar") }
-  let(:dsl)      { described_class.new(resource, options) }
-  let(:options)  { Hash.new }
+  let(:dsl)      { described_class.new(resource, [resource.defs, resource.properties]) }
   let(:root)     { Sinatra::Schema::Root.instance }
 
   it "adds a string definition to the resource" do
@@ -18,9 +17,18 @@ describe Sinatra::Schema::DSL::Definitions do
     assert_equal "boolean", resource.defs[:foobar].type
   end
 
+  it "adds nested definitions" do
+    dsl.nested(:user) do |prop|
+      prop.text :email
+      prop.bool :admin
+    end
+    assert_equal 2, resource.defs[:user].size
+    assert_equal "string", resource.defs[:user][:email].type
+    assert_equal "boolean", resource.defs[:user][:admin].type
+  end
+
   describe "#ref" do
-    let(:definition) { Sinatra::Schema::Definition.new }
-    before { options[:serialize] = true }
+    let(:definition) { Sinatra::Schema::Definition.new(id: :foobar) }
 
     it "adds a reference to another definition in the resource" do
       resource.defs[:foobar] = definition

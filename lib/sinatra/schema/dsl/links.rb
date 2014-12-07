@@ -28,7 +28,7 @@ module Sinatra
         end
 
         def property
-          DSL::Definitions.new(resource, link: link, serialize: false)
+          DSL::Definitions.new(resource, [resource.defs, link.properties])
         end
 
         protected
