@@ -27,5 +27,15 @@ describe Sinatra::Schema do
       assert_equal 400, last_response.status
       assert_equal({ "error" => "Missing expected params: email" }, last_json)
     end
+
+    it "allows apps to redefine the error handler" do
+      @rack_app = Sinatra.new(TestApp) do
+        error(Sinatra::Schema::BadParams) do
+          halt 422 # instead of 400
+        end
+      end
+      post "/accounts", foo: "bar"
+      assert_equal 422, last_response.status
+    end
   end
 end
