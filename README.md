@@ -41,9 +41,9 @@ resource("/account") do |res|
     link.property.ref  :email # reuse the property defined above
     link.property.bool :admin
 
-    link.action do |params|
-      user = User.new(email: params[:email])
-      if params[:admin] # params are casted accordingly!
+    link.action do |data|
+      user = User.new(email: data[:email])
+      if data[:admin] # schema params are casted accordingly!
         # ...
       end
     end
