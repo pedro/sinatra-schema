@@ -21,8 +21,12 @@ module Sinatra
       app.helpers ParamParsing
       app.helpers ParamValidation
 
-      app.error(Sinatra::Schema::BadParams) do |e|
+      app.error(Sinatra::Schema::BadRequest) do |e|
         halt(400, MultiJson.encode(error: e.message))
+      end
+
+      app.error(Sinatra::Schema::BadParams) do |e|
+        halt(422, MultiJson.encode(error: e.message))
       end
 
       app.get "/schema" do

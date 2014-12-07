@@ -22,20 +22,20 @@ describe Sinatra::Schema do
   end
 
   describe "error handling" do
-    it "converts BadParams into a 400" do
-      post "/accounts", foo: "bar"
-      assert_equal 400, last_response.status
-      assert_equal({ "error" => "Missing expected params: email" }, last_json)
+    before do
+      header "Content-Type", "application/json"
     end
 
-    it "allows apps to redefine the error handler" do
-      @rack_app = Sinatra.new(TestApp) do
-        error(Sinatra::Schema::BadParams) do
-          halt 422 # instead of 400
-        end
-      end
-      post "/accounts", foo: "bar"
+    it "converts BadRequest into a 400" do
+      post "/accounts", "{"
+      assert_equal 400, last_response.status
+      assert_equal({ "error" => "Invalid JSON encoded in request" }, last_json)
+    end
+
+    it "converts BadParams into a 422" do
+      post "/accounts", "{}"
       assert_equal 422, last_response.status
+      assert_equal({ "error" => "Missing expected params: email" }, last_json)
     end
   end
 end
