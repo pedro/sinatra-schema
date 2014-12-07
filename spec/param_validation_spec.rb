@@ -37,7 +37,6 @@ describe Sinatra::Schema::ParamValidation do
     $properties = { foo: { bar: Sinatra::Schema::Definition.new(type: "boolean") }}
     assert_raises(Sinatra::Schema::BadParams) do
       post "/", MultiJson.encode(foo: { bar: "omg" })
-      puts last_response.body
     end
   end
 end
