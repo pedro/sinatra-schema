@@ -44,7 +44,7 @@ describe Sinatra::Schema::ParamParsing do
     end
 
     it "leaves params without the corresponding property untouched" do
-      $properies = {}
+      $properties = {}
       params = { "foo" => "bar" }
       post "/", params
       assert_equal params, last_json
