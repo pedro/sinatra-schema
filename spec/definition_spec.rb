@@ -45,4 +45,20 @@ describe Sinatra::Schema::Definition do
       refute definition.valid?("wrong")
     end
   end
+
+  describe "#to_schema" do
+    it "dumps emails" do
+      definition.type = "email"
+      schema = definition.to_schema
+      assert_equal "string", schema[:type]
+      assert_equal "email", schema[:format]
+    end
+
+    it "dumps uuids" do
+      definition.type = "uuid"
+      schema = definition.to_schema
+      assert_equal "string", schema[:type]
+      assert_equal "uuid", schema[:format]
+    end
+  end
 end

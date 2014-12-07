@@ -38,10 +38,7 @@ module Sinatra
           description: description,
           type: "object",
           definitions: defs.inject({}) { |h, (id, definition)|
-            h[id] = {
-              description: definition.description,
-              type:        definition.type,
-            }
+            h[id] = definition.to_schema
             h
           },
           links: links.map { |link|
