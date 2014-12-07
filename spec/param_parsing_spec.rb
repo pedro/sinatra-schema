@@ -73,7 +73,7 @@ describe Sinatra::Schema::ParamParsing do
   end
 
   it "errors out on other formats" do
-    assert_raises(RuntimeError, "Cannot handle media type application/xml") do
+    assert_raises(Sinatra::Schema::UnsupportedMediaType) do
       header "Content-Type", "application/xml"
       post "/", "<omg />"
     end

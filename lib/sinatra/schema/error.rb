@@ -8,5 +8,11 @@ module Sinatra
         super("Could not resolve property ref #{id}")
       end
     end
+
+    class UnsupportedMediaType < Error
+      def initialize(media_type)
+        super("Unsupported media type: #{media_type}")
+      end
+    end
   end
 end

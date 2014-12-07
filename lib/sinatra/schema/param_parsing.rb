@@ -8,7 +8,7 @@ module Sinatra
         when "application/x-www-form-urlencoded"
           cast_regular_params(properties)
         else
-          raise "Cannot handle media type #{request.media_type}"
+          raise UnsupportedMediaType.new(request.media_type)
         end
       end
 
