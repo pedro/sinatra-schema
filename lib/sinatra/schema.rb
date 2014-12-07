@@ -20,6 +20,11 @@ module Sinatra
     def self.registered(app)
       app.helpers ParamParsing
       app.helpers ParamValidation
+
+      app.error(Sinatra::Schema::BadParams) do |e|
+        halt(400, MultiJson.encode(error: e.message))
+      end
+
       app.get "/schema" do
         content_type("application/schema+json")
         response.headers["Cache-Control"] = "public, max-age=3600"

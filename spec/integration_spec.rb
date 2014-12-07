@@ -21,8 +21,11 @@ describe Sinatra::Schema do
       MultiJson.decode(last_response.body))
   end
 
-  it "validates input" do
-    post "/accounts", foo: "bar"
-    assert_equal 400, last_response.status
+  describe "error handling" do
+    it "converts BadParams into a 400" do
+      post "/accounts", foo: "bar"
+      assert_equal 400, last_response.status
+      assert_equal({ "error" => "Missing expected params: email" }, last_json)
+    end
   end
 end
