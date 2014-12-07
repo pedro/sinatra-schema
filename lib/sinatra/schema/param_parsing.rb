@@ -29,12 +29,18 @@ module Sinatra
         raise "Invalid JSON"
       end
 
-      def cast_regular_params(properties)
-        casted_params = params.inject({}) do |casted, (k, v)|
+      def cast_regular_params(properties, root=params)
+        casted_params = root.inject({}) do |casted, (k, v)|
           definition = properties[k.to_sym]
-          # if there's no definition just leave the original param,
-          # let the validation raise on this later:
-          casted[k]  = definition ? definition.cast(v) : v
+
+          # handle nested params
+          if definition.is_a?(Hash) || v.is_a?(Hash)
+            casted[k] = cast_regular_params(definition, v)
+          else
+            # if there's no definition just leave the original param,
+            # let the validation raise on this later:
+            casted[k]  = definition ? definition.cast(v) : v
+          end
           casted
         end
         indifferent_params(casted_params)

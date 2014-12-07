@@ -31,6 +31,12 @@ describe Sinatra::Schema::ParamParsing do
       post "/", MultiJson.encode(params)
       assert_equal params, last_json
     end
+
+    it "preserves nested params" do
+      params = { "foo" => { "bar" => 42 }}
+      post "/", MultiJson.encode(params)
+      assert_equal params, last_json
+    end
   end
 
   describe "form-encoded params" do
@@ -41,6 +47,14 @@ describe Sinatra::Schema::ParamParsing do
       }
       post "/", some_text: "true", some_bool: "true"
       assert_equal({ "some_text" => "true", "some_bool" => true }, last_json)
+    end
+
+    it "handles nested params" do
+      $properties = {
+        foo: { bar: Sinatra::Schema::Definition.new(type: "boolean") }
+      }
+      post "/", foo: { bar: "true" }
+      assert_equal({ "foo" => { "bar" => true }}, last_json)
     end
 
     it "leaves params without the corresponding property untouched" do
