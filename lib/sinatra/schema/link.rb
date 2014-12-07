@@ -11,12 +11,16 @@ module Sinatra
       end
 
       def register(app)
+        app.send(method.downcase, href, &handler)
+      end
+
+      def handler
         link = self
-        app.send(method.downcase, href) do
+        lambda do
           begin
             schema_params = parse_params(link.properties)
             validate_params!(schema_params, link.properties)
-            res = link.action_block.call(schema_params)
+            res = instance_exec(schema_params, &link.action_block)
             link.resource.validate_response!(res)
             res
           rescue RuntimeError => e
