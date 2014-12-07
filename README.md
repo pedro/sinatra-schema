@@ -116,6 +116,26 @@ $ rake schema
 }
 ```
 
+### Error handling
+
+By default it will raise a 400 on bad requests (eg: invalid JSON request) and a 422 on bad params (eg: missing mandatory param):
+
+```
+$ curl -d "" http://localhost:5000/account
+{"error":"Missing expected params: email"}
+```
+
+Redefine the error handlers to render a different status or serialize errors differently:
+
+```ruby
+class MyApi < Sinatra::Base
+  register Sinatra::Schema
+
+  error(Sinatra::Schema::BadParams) do |e|
+    halt(422, MultiJson.encode(id: "bad_params", message: e.message))
+  end
+end
+```
 
 ## Context
 
