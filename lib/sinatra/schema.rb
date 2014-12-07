@@ -4,6 +4,7 @@ require "singleton"
 require "multi_json"
 
 require "sinatra/schema/definition"
+require "sinatra/schema/error"
 require "sinatra/schema/link"
 require "sinatra/schema/param_parsing"
 require "sinatra/schema/param_validation"

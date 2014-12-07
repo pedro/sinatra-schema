@@ -40,7 +40,7 @@ module Sinatra
 
         def ref(id)
           unless definition = resource.defs[id] || Sinatra::Schema::Root.instance.find_definition(id)
-            raise "Unknown reference: #{id}"
+            raise BadReference.new(id)
           end
           add definition, true
         end

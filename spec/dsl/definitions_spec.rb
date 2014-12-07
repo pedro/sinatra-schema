@@ -45,5 +45,12 @@ describe Sinatra::Schema::DSL::Definitions do
       assert_equal 1, other.defs.size
       assert_equal 1, resource.properties.size
     end
+
+    it "raises when we can't resolve the ref" do
+      assert_raises(Sinatra::Schema::BadReference) do
+        dsl.ref :foobar
+      end
+
+    end
   end
 end
