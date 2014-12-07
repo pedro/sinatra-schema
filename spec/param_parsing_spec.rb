@@ -16,7 +16,7 @@ describe Sinatra::Schema::ParamParsing do
     end
 
     it "handles invalid json" do
-      assert_raises(RuntimeError, "Invalid JSON") do
+      assert_raises(Sinatra::Schema::BadRequest) do
         post "/", "{"
       end
     end

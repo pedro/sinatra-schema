@@ -21,12 +21,12 @@ module Sinatra
         request.body.rewind # leave it ready for other calls
         supplied_params = MultiJson.decode(body)
         unless supplied_params.is_a?(Hash)
-          raise BadRequest.new("Invalid JSON Request, please encode params as a hash")
+          raise BadRequest.new("Invalid JSON request, please encode params as a hash")
         end
 
         indifferent_params(supplied_params)
       rescue MultiJson::ParseError
-        raise "Invalid JSON"
+        raise BadRequest.new("Invalid JSON encoded in request")
       end
 
       def cast_regular_params(properties, root=params)
