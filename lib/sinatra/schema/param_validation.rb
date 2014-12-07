@@ -13,8 +13,13 @@ module Sinatra
         end
 
         properties.each do |id, definition|
-          unless definition.valid?(params[id])
-            raise "Bad param: #{id}"
+          # handle nested params
+          if definition.is_a?(Hash)
+            validate_params!(params[id], definition)
+          else
+            unless definition.valid?(params[id])
+              raise "Bad param: #{id}"
+            end
           end
         end
       end

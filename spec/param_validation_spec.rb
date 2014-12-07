@@ -32,4 +32,12 @@ describe Sinatra::Schema::ParamValidation do
       post "/", MultiJson.encode(bool: "omg")
     end
   end
+
+  it "supports nested params" do
+    $properties = { foo: { bar: Sinatra::Schema::Definition.new(type: "boolean") }}
+    assert_raises(RuntimeError) do
+      post "/", MultiJson.encode(foo: { bar: "omg" })
+      puts last_response.body
+    end
+  end
 end
