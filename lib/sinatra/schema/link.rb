@@ -23,7 +23,7 @@ module Sinatra
             res = instance_exec(schema_params, &link.action_block)
             link.resource.validate_response!(res)
             res
-          rescue RuntimeError => e
+          rescue Sinatra::Schema::Error => e
             halt(400)
           end
         end

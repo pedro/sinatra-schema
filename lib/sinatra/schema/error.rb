@@ -14,5 +14,11 @@ module Sinatra
         super(msg)
       end
     end
+
+    class BadParams < Error
+      def initialize(msg)
+        super(msg)
+      end
+    end
   end
 end
