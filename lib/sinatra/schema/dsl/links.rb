@@ -34,7 +34,7 @@ module Sinatra
         protected
 
         def build_link
-          full_href = "#{resource.path}/#{href.chomp("/")}".chomp("/")
+          full_href = "#{resource.path}/#{href}".gsub("//", "/").chomp("/")
           Link.new(resource: resource, method: method, href: full_href)
         end
       end
