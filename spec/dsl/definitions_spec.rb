@@ -55,7 +55,15 @@ describe Sinatra::Schema::DSL::Definitions do
       assert_raises(Sinatra::Schema::BadReference) do
         dsl.ref :foobar
       end
+    end
 
+    it "allows references to have a different id" do
+      other = Sinatra::Schema::Resource.new(path: "/others")
+      root.add_resource(other)
+      other.defs[:foobar] = definition
+      dsl.ref :my_foobar, "other/foobar"
+      assert resource.properties.has_key?(:my_foobar)
+      assert_equal :foobar, resource.properties[:my_foobar].id
     end
   end
 end
