@@ -27,6 +27,11 @@ describe Sinatra::Schema::DSL::Definitions do
     assert_equal "boolean", resource.defs[:user][:admin].type
   end
 
+  it "sets other options" do
+    dsl.text(:foobar, optional: true)
+    assert_equal true, resource.defs[:foobar].optional
+  end
+
   describe "#ref" do
     let(:definition) { Sinatra::Schema::Definition.new(id: :foobar) }
 

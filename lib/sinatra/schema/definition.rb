@@ -1,12 +1,13 @@
 module Sinatra
   module Schema
     class Definition
-      attr_accessor :description, :example, :id, :type
+      attr_accessor :description, :example, :id, :optional, :type
 
       def initialize(options={})
         @description = options[:description]
         @example     = options[:example]
         @id          = options[:id]
+        @optional    = options[:optional]
         @type        = options[:type]
       end
 
@@ -23,8 +24,7 @@ module Sinatra
       end
 
       def valid?(value)
-        # always accept nils for now
-        return if value.nil?
+        return true if value.nil? && optional
 
         case type
         when "boolean"

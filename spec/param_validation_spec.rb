@@ -26,6 +26,19 @@ describe Sinatra::Schema::ParamValidation do
     end
   end
 
+  it "errors out on required params" do
+    $properties = { foo: Sinatra::Schema::Definition.new(type: "string", optional: false) }
+    assert_raises(Sinatra::Schema::BadParams) do
+      post "/", MultiJson.encode(foo: nil)
+    end
+  end
+
+  it "allows optional params to be nil" do
+    $properties = { foo: Sinatra::Schema::Definition.new(type: "string", optional: true) }
+    post "/", MultiJson.encode(foo: nil)
+    assert_equal 200, last_response.status
+  end
+
   it "errors out on wrong format" do
     $properties = { bool: Sinatra::Schema::Definition.new(type: "boolean") }
     assert_raises(Sinatra::Schema::BadParams) do

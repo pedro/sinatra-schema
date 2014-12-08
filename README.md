@@ -39,6 +39,7 @@ resource("/account") do |res|
 
   res.link(:post) do |link|
     link.property.ref  :email # reuse the property defined above
+    link.property.text :role, optional: true
     link.property.bool :admin
 
     link.action do |data|
