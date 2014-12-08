@@ -5,8 +5,6 @@
 
 Define a schema for your Sinatra application to get requests and responses validated. Dump it schema as a JSON Schema to aid client generation and more!
 
-**Under design**. The reference below might be outdated – please check specs to see the latest.
-
 
 ## Usage
 
