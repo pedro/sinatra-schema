@@ -51,7 +51,7 @@ resource("/account") do |res|
   end
 ```
 
-### Cross-resource params
+### Reference properties across resources
 
 Reuse properties from other resources when appropriate:
 
