@@ -26,6 +26,14 @@ module Sinatra
           end
         end
       end
+
+      def to_schema
+        {
+          description: description,
+          href:        href,
+          method:      method.to_s.upcase,
+        }
+      end
     end
   end
 end

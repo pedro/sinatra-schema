@@ -41,13 +41,7 @@ module Sinatra
             h[id] = definition.to_schema
             h
           },
-          links: links.map { |link|
-            {
-              description: link.description,
-              href:        link.href,
-              method:      link.method.to_s.upcase,
-            }
-          }
+          links: links.map(&:to_schema)
         }
       end
     end
