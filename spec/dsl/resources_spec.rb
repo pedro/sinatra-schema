@@ -23,10 +23,8 @@ describe Sinatra::Schema::DSL::Resources do
     end
 
     it "supports nested properties" do
-      dsl.property.nested :user do |prop|
-        prop.text :email
-        prop.bool :admin
-      end
+      dsl.property[:user].text :email
+      dsl.property[:user].bool :admin
       assert_equal 2, dsl.resource.properties[:user].size
     end
   end

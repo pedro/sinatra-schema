@@ -70,11 +70,8 @@ These are also casted and validated as you'd expect:
 
 ```ruby
 resource("/albums") do |res|
-  resource.link(:post) do |link|
-    link.nested :artist do |a|
-      a.property.text :name
-    end
-  end
+  res.property[:label].text :name
+  res.property[:label].bool :active
 end
 ```
 

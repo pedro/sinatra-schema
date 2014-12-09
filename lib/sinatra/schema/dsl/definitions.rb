@@ -30,12 +30,13 @@ module Sinatra
           add Definition.new(options)
         end
 
-        def nested(id)
-          # add a space in the definitions/properties for the nested def:
-          targets.each { |h| h[id] = {} }
+        # support nested properties. eg: property[:foo].text :bar
+        def [](id)
+          # make sure all targets have a sub-hash for this nested def:
+          targets.each { |h| h[id] ||= {} }
 
-          # yield a new DSL with updated targets
-          yield Definitions.new(resource, targets.map { |h| h[id] })
+          # return a new DSL with updated targets so it can be chained:
+          Definitions.new(resource, targets.map { |h| h[id] })
         end
 
         def ref(id, ref_to=nil)
