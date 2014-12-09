@@ -13,7 +13,7 @@ class TestApp < Sinatra::Base
       example:     "username@example.com",
       format:      "email"
 
-    res.link(:get) do |link|
+    res.get do |link|
       link.title       "Info"
       link.rel         "self"
       link.description "Info for account"
@@ -22,7 +22,7 @@ class TestApp < Sinatra::Base
       end
     end
 
-    res.link(:post) do |link|
+    res.post do |link|
       link.title         "Create"
       link.rel           "create"
       link.description   "Create a new account"

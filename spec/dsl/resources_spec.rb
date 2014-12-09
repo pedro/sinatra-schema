@@ -1,7 +1,7 @@
 require "spec_helper"
 
 describe Sinatra::Schema::DSL::Resources do
-  let(:app) { Sinatra::Application.new }
+  let(:app) { Sinatra.new {} }
   let(:dsl) { described_class.new(app, "/foobar") }
 
   it "sets the resource description" do
@@ -26,6 +26,33 @@ describe Sinatra::Schema::DSL::Resources do
       dsl.property[:user].text :email
       dsl.property[:user].bool :admin
       assert_equal 2, dsl.resource.properties[:user].size
+    end
+  end
+
+  describe "building links" do
+    it "builds a DELETE" do
+      link = dsl.delete
+      assert_equal :delete, link.method
+    end
+
+    it "builds a GET" do
+      link = dsl.get
+      assert_equal :get, link.method
+    end
+
+    it "builds a PATCH" do
+      link = dsl.patch
+      assert_equal :patch, link.method
+    end
+
+    it "builds a POST" do
+      link = dsl.post
+      assert_equal :post, link.method
+    end
+
+    it "builds a PUT" do
+      link = dsl.put
+      assert_equal :put, link.method
     end
   end
 end

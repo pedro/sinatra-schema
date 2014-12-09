@@ -11,7 +11,7 @@ module Sinatra
       end
 
       def register(app)
-        app.send(method.downcase, href, &handler)
+        app.send(method, href, &handler)
       end
 
       def handler

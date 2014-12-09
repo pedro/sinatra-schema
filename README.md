@@ -17,7 +17,7 @@ class MyApi < Sinatra::Base
   resource("/account") do |res|
     res.property.text :email
 
-    res.link(:get) do |link|
+    res.get do |link|
       link.action do
         # note per definition above we need to serialize "email"
         MultiJson.encode(email: current_user.email)
@@ -35,7 +35,7 @@ Links can have properties too:
 resource("/account") do |res|
   res.property.text :email
 
-  res.link(:post) do |link|
+  res.post do |link|
     link.property.ref  :email # reuse the property defined above
     link.property.text :role, optional: true
     link.property.bool :admin
