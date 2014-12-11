@@ -38,8 +38,7 @@ module Sinatra
           description: description,
           type: "object",
           definitions: defs.inject({}) { |h, (id, definition)|
-            h[id] = definition.to_schema
-            h
+            h.merge(id => definition.to_schema)
           },
           links: links.map(&:to_schema)
         }
