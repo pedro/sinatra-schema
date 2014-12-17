@@ -2,6 +2,7 @@ require "active_support/inflector"
 require "sinatra/base"
 require "singleton"
 require "multi_json"
+require "time"
 
 require "sinatra/schema/definition"
 require "sinatra/schema/error"

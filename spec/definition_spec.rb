@@ -13,6 +13,19 @@ describe Sinatra::Schema::Definition do
       assert_equal false, definition.cast("false")
     end
 
+    it "casts datetime" do
+      definition.type = "datetime"
+      t = definition.cast("2014-05-01T12:13:14.15Z")
+      assert_equal 2014, t.year
+      assert_equal 5, t.month
+      assert_equal 1, t.day
+      assert_equal 12, t.hour
+      assert_equal 13, t.min
+      assert_equal 14, t.sec
+      assert_equal 150000, t.usec
+      assert_equal "UTC", t.zone
+    end
+
     it "casts text" do
       definition.type = "string"
       assert_equal "123", definition.cast(123)

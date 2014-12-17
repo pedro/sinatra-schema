@@ -18,6 +18,8 @@ module Sinatra
         case type
         when "boolean"
           %w( t true 1 ).include?(value.to_s)
+        when "datetime"
+          Time.parse(value.to_s)
         when "email", "string", "uuid"
           value.to_s
         end
