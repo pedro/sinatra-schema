@@ -33,7 +33,7 @@ module Sinatra
       app.get "/schema" do
         content_type("application/schema+json")
         response.headers["Cache-Control"] = "public, max-age=3600"
-        MultiJson.encode(JsonSchema.dump_root(app.schema_root), pretty: true)
+        MultiJson.encode(JsonSchema.dump(app.schema_root), pretty: true)
       end
     end
 
