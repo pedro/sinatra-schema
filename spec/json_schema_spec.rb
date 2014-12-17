@@ -41,4 +41,13 @@ describe Sinatra::Schema::JsonSchema do
     end
   end
 
+  describe "#dump_link" do
+    let(:link) { Sinatra::Schema::Link.new }
+
+    it "renders the method in upcase" do
+      link.method = :get
+      schema = json_schema.dump_link(link)
+      assert_equal "GET", schema[:method]
+    end
+  end
 end

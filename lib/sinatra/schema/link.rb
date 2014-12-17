@@ -3,7 +3,7 @@ module Sinatra
     class Link
       attr_accessor :action_block, :resource, :title, :description, :href, :method, :properties, :rel
 
-      def initialize(options)
+      def initialize(options={})
         @resource   = options[:resource]
         @method     = options[:method]
         @href       = options[:href]
@@ -25,14 +25,6 @@ module Sinatra
             res
           end
         end
-      end
-
-      def to_schema
-        {
-          description: description,
-          href:        href,
-          method:      method.to_s.upcase,
-        }
       end
     end
   end

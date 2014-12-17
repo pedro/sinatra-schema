@@ -28,7 +28,7 @@ module Sinatra
           definitions: resource.defs.inject({}) { |h, (id, definition)|
             h.merge(id => dump_definition(definition))
           },
-          links: resource.links.map(&:to_schema)
+          links: resource.links.map { |link| dump_link(link) }
         }
       end
 
@@ -42,6 +42,14 @@ module Sinatra
           attrs[:description] = definition.description
         end
         attrs
+      end
+
+      def dump_link(link)
+        {
+          description: link.description,
+          href:        link.href,
+          method:      link.method.to_s.upcase,
+        }
       end
 
       protected
