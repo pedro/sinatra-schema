@@ -20,29 +20,35 @@ describe Sinatra::Schema::Definition do
   end
 
   describe "#valid?" do
-    it "detects booleans" do
+    it "validates booleans" do
       definition.type = "boolean"
       assert definition.valid?(true)
       assert definition.valid?(false)
       refute definition.valid?("true")
     end
 
-    it "detects emails" do
+    it "validates emails" do
       definition.type = "email"
       assert definition.valid?("foo@bar.com")
       refute definition.valid?("foobar.com")
     end
 
-    it "detects text" do
+    it "validates text" do
       definition.type = "string"
       assert definition.valid?("foo")
       refute definition.valid?(123)
     end
 
-    it "detects uuids" do
+    it "validates uuids" do
       definition.type = "uuid"
       assert definition.valid?(SecureRandom.uuid)
       refute definition.valid?("wrong")
+    end
+
+    it "validates date+time fields" do
+      definition.type = "datetime"
+      assert definition.valid?("1985-04-12T23:20:50.52Z")
+      refute definition.valid?("12/4/1985 23:20:50")
     end
   end
 end

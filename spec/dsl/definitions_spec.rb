@@ -17,6 +17,12 @@ describe Sinatra::Schema::DSL::Definitions do
     assert_equal "boolean", resource.defs[:foobar].type
   end
 
+  it "adds a datetime definition to the resource" do
+    dsl.datetime(:foobar)
+    assert_equal 1, resource.defs.size
+    assert_equal "datetime", resource.defs[:foobar].type
+  end
+
   it "adds nested definitions" do
     dsl[:user].text :email
     dsl[:user].bool :admin

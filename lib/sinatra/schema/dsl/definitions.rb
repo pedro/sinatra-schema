@@ -25,6 +25,11 @@ module Sinatra
           add Definition.new(options)
         end
 
+        def datetime(id, options={})
+          options.merge!(id: id, type: "datetime")
+          add Definition.new(options)          
+        end
+
         def email(id, options={})
           options.merge!(id: id, type: "email")
           add Definition.new(options)

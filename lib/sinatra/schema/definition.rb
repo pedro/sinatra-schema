@@ -29,6 +29,8 @@ module Sinatra
         case type
         when "boolean"
           [true, false].include?(value)
+        when "datetime"
+          value.to_s =~ /^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-2][0-9]:[0-5][0-9]:[0-5][0-9](\.[0-9]+)?(Z|[\-+][0-9]{2}:[0-5][0-9])$/
         when "email"
           value.to_s =~ /\A[^@\s]+@([^@\s]+\.)+[^@\s]+\z/
         when "string"
