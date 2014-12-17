@@ -5,6 +5,7 @@ require "multi_json"
 
 require "sinatra/schema/definition"
 require "sinatra/schema/error"
+require "sinatra/schema/json_schema"
 require "sinatra/schema/link"
 require "sinatra/schema/param_parsing"
 require "sinatra/schema/param_validation"
@@ -32,7 +33,7 @@ module Sinatra
       app.get "/schema" do
         content_type("application/schema+json")
         response.headers["Cache-Control"] = "public, max-age=3600"
-        MultiJson.encode(app.schema_root.to_schema, pretty: true)
+        MultiJson.encode(JsonSchema.dump_root(app.schema_root), pretty: true)
       end
     end
 
