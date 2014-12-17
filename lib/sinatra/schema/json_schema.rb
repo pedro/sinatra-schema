@@ -5,8 +5,7 @@ module Sinatra
         {
           "$schema" => "http://json-schema.org/draft-04/hyper-schema",
           "definitions" => root.resources.inject({}) { |result, (id, resource)|
-            result[id] = resource.to_schema
-            result
+            result.merge(id => resource.to_schema)
           }
         }
       end
