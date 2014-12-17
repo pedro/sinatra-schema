@@ -58,6 +58,8 @@ module Sinatra
         case type
         when "boolean"
           "boolean"
+        when "datetime"
+          ["string", "date-time"]
         when "email"
           ["string", "email"]
         when "string"

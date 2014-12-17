@@ -26,6 +26,13 @@ describe Sinatra::Schema::JsonSchema do
       assert_nil schema[:format]
     end
 
+    it "handles the datetime format" do
+      definition.type = "datetime"
+      schema = json_schema.dump_definition(definition)
+      assert_equal "string", schema[:type]
+      assert_equal "date-time", schema[:format]
+    end
+
     it "handles the email format" do
       definition.type = "email"
       schema = json_schema.dump_definition(definition)
