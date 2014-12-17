@@ -37,33 +37,6 @@ module Sinatra
           value.to_s =~ /\A[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}\Z/
         end
       end
-
-      def to_schema
-        schema_type, schema_format = json_schema_type_and_format
-        attrs = { type: schema_type }
-        if schema_format
-          attrs[:format] = schema_format
-        end
-        if description
-          attrs[:description] = description
-        end
-        attrs
-      end
-
-      protected
-
-      def json_schema_type_and_format
-        case type
-        when "boolean"
-          "boolean"
-        when "email"
-          ["string", "email"]
-        when "string"
-          "string"
-        when "uuid"
-          ["string", "uuid"]
-        end
-      end
     end
   end
 end
