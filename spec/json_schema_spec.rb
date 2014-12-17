@@ -3,7 +3,7 @@ require "spec_helper"
 describe Sinatra::Schema::JsonSchema do
   let(:json_schema) { described_class.new(root) }
   let(:root)        { Sinatra::Schema::Root.instance }
-  let(:schema)      { json_schema.dump }
+  let(:schema)      { json_schema.dump_root }
 
   describe "root level" do
     it "sets $schema" do

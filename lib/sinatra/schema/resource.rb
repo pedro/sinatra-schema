@@ -31,18 +31,6 @@ module Sinatra
           Utils.validate_keys!(properties, res)
         end
       end
-
-      def to_schema
-        {
-          title: title,
-          description: description,
-          type: "object",
-          definitions: defs.inject({}) { |h, (id, definition)|
-            h.merge(id => definition.to_schema)
-          },
-          links: links.map(&:to_schema)
-        }
-      end
     end
   end
 end
