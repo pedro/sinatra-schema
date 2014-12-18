@@ -45,14 +45,14 @@ module Sinatra
         end
 
         def ref(id, ref_to=nil)
-          add Reference.new(resource, id, ref_to), true
+          add Reference.new(resource, id, ref_to)
         end
 
         # TODO support other types
 
         protected
 
-        def add(definition, reference=false)
+        def add(definition)
           targets.each do |target|
             target[definition.id] ||= definition
           end
