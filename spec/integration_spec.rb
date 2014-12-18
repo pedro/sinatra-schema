@@ -45,10 +45,10 @@ describe Sinatra::Schema do
 
     it "generates definitions" do
       assert_equal Hash, @schema["definitions"].class
-      assert_equal Hash, @schema["definitions"]["account"].class
-      assert_equal "Account", @schema["definitions"]["account"]["title"]
+      assert_equal Hash, @schema["definitions"]["accounts"].class
+      assert_equal "Accounts", @schema["definitions"]["accounts"]["title"]
       assert_equal "An account represents an individual signed up to use the service",
-        @schema["definitions"]["account"]["description"]
+        @schema["definitions"]["accounts"]["description"]
     end
   end
 

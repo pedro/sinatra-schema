@@ -5,13 +5,13 @@ describe Sinatra::Schema::Resource do
 
   describe "#id" do
     it "is inferred from the path" do
-      assert_equal :artist, resource.id
+      assert_equal :artists, resource.id
     end
   end
 
   describe "#title" do
     it "is inferred from the path" do
-      assert_equal "Artist", resource.title
+      assert_equal "Artists", resource.title
     end
   end
 

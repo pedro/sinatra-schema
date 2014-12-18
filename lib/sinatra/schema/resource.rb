@@ -11,11 +11,11 @@ module Sinatra
       end
 
       def id
-        @id ||= ActiveSupport::Inflector.singularize(path.split("/").last).to_sym
+        @id ||= path.split("/").last.to_sym
       end
 
       def title
-        @title ||= ActiveSupport::Inflector.singularize(path.split("/").last).capitalize
+        @title ||= id.to_s.capitalize
       end
 
       def validate_response!(rel, raw)

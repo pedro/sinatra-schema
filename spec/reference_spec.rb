@@ -1,7 +1,7 @@
 require "spec_helper"
 
 describe Sinatra::Schema::Reference do
-  let(:resource) { Sinatra::Schema::Root.instance.resources[:account] }
+  let(:resource) { Sinatra::Schema::Root.instance.resources[:accounts] }
   let(:ref) { described_class.new(resource, :foo, :email) }
   let(:definition) { resource.defs[:email] }
 
@@ -13,7 +13,7 @@ describe Sinatra::Schema::Reference do
     end
 
     it "finds other properties elsewhere in the schema" do
-      ref.ref_spec = "account/email"
+      ref.ref_spec = "accounts/email"
       assert_equal definition, ref.resolve!
     end
 
