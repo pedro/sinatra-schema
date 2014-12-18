@@ -10,18 +10,8 @@ module Sinatra
           @targets  = targets
         end
 
-        def text(id, options={})
-          options.merge!(id: id, type: "string")
-          add Definition.new(options)
-        end
-
         def bool(id, options={})
           options.merge!(id: id, type: "boolean")
-          add Definition.new(options)
-        end
-
-        def uuid(id, options={})
-          options.merge!(id: id, type: "uuid")
           add Definition.new(options)
         end
 
@@ -35,20 +25,29 @@ module Sinatra
           add Definition.new(options)
         end
 
-        # support nested properties. eg: property[:foo].text :bar
-        def [](id)
-          # make sure all targets have a sub-hash for this nested def:
-          targets.each { |h| h[id] ||= {} }
-
-          # return a new DSL with updated targets so it can be chained:
-          Definitions.new(resource, targets.map { |h| h[id] })
-        end
-
+        # support references to other properties that are lazily evaluated
         def ref(id, ref_to=nil)
           add Reference.new(resource, id, ref_to)
         end
 
-        # TODO support other types
+        def text(id, options={})
+          options.merge!(id: id, type: "string")
+          add Definition.new(options)
+        end
+
+        def uuid(id, options={})
+          options.merge!(id: id, type: "uuid")
+          add Definition.new(options)
+        end
+
+        # support nested properties. eg: property[:foo].text :bar
+        def [](id)
+          # make sure all targets have a sub-hash for this nested def
+          targets.each { |h| h[id] ||= {} }
+
+          # return a new DSL with updated targets so it can be chained
+          Definitions.new(resource, targets.map { |h| h[id] })
+        end
 
         protected
 
