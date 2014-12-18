@@ -16,7 +16,7 @@ module Sinatra
         end
 
         def rel(rel)
-          link.rel = rel
+          link.rel = rel.to_sym
         end
 
         def description(description)

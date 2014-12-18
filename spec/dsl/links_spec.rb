@@ -10,9 +10,9 @@ describe Sinatra::Schema::DSL::Links do
     assert_equal "foo", dsl.link.title
   end
 
-  it "sets the link rel" do
+  it "sets the link rel, cast to symbol" do
     dsl.rel("foo")
-    assert_equal "foo", dsl.link.rel
+    assert_equal :foo, dsl.link.rel
   end
 
   it "sets the link description" do
