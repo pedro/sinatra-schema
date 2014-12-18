@@ -1,4 +1,3 @@
-require "active_support/inflector"
 require "sinatra/base"
 require "singleton"
 require "multi_json"
