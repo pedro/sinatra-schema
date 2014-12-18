@@ -8,7 +8,7 @@ Define a schema for your Sinatra application to get requests and responses valid
 
 ## Usage
 
-Register `Sinatra::Schema` to define your resource like:
+Register `Sinatra::Schema` to define resources, like:
 
 ```ruby
 class MyApi < Sinatra::Base
@@ -19,7 +19,7 @@ class MyApi < Sinatra::Base
 
     res.get do |link|
       link.action do
-        # note per definition above we need to serialize "email"
+        # per definition above we need to serialize "email"
         MultiJson.encode(email: current_user.email)
       end
     end
@@ -33,8 +33,6 @@ Links can have properties too:
 
 ```ruby
 resource("/account") do |res|
-  res.property.text :email
-
   res.post do |link|
     link.property.ref  :email # reuse the property defined above
     link.property.text :role, optional: true
@@ -42,7 +40,7 @@ resource("/account") do |res|
 
     link.action do |data|
       user = User.new(email: data[:email])
-      if data[:admin] # schema params are casted accordingly!
+      if data[:admin] # this is a boolean, params are casted accordingly!
         # ...
       end
     end
@@ -64,7 +62,7 @@ resource("/albums") do |res|
 end
 ```
 
-### Nested params
+### Nested properties
 
 These are also casted and validated as you'd expect:
 
