@@ -2,7 +2,12 @@ module Sinatra
   module Schema
     module ParamValidation
       def validate_params!(params, properties)
-        missing = properties.keys.map(&:to_s).sort - params.keys.map(&:to_s).sort
+        required_properties = properties.map do |k, prop|
+          # ignore nested properties for now, we'll cover these next
+          k unless prop.is_a?(Hash) || prop.optional
+        end.compact
+
+        missing = required_properties.map(&:to_s).sort - params.keys.map(&:to_s).sort
         unless missing.empty?
           raise BadParams.new("Missing expected params: #{missing.join(',')}")
         end

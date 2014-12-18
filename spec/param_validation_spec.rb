@@ -39,6 +39,12 @@ describe Sinatra::Schema::ParamValidation do
     assert_equal 200, last_response.status
   end
 
+  it "allows optional params not set" do
+    $properties = { foo: Sinatra::Schema::Definition.new(type: "string", optional: true) }
+    post "/", "{}"
+    assert_equal 200, last_response.status
+  end
+
   it "errors out on wrong format" do
     $properties = { bool: Sinatra::Schema::Definition.new(type: "boolean") }
     assert_raises(Sinatra::Schema::BadParams) do
