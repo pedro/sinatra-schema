@@ -8,7 +8,7 @@ class TestApp < Sinatra::Base
   resource("/accounts") do |res|
     res.description "An account represents an individual signed up to use the service"
 
-    res.property.text :email,
+    res.property.email :email,
       description: "unique email address of account",
       example:     "username@example.com",
       format:      "email"

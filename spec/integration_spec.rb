@@ -16,9 +16,9 @@ describe Sinatra::Schema do
     end
 
     it "support resource posts" do
-      post "/accounts", email: "omg"
+      post "/accounts", email: "foo@baz.com"
       assert_equal 200, last_response.status
-      assert_equal({ "email" => "omg" },
+      assert_equal({ "email" => "foo@baz.com" },
         MultiJson.decode(last_response.body))
     end
   end
