@@ -31,43 +31,14 @@ describe Sinatra::Schema::DSL::Definitions do
     assert_equal "boolean", resource.defs[:user][:admin].type
   end
 
+  it "adds references" do
+    dsl.ref(:another_property)
+    assert_equal 1, resource.defs.size
+    assert_instance_of Sinatra::Schema::Reference, resource.defs[:another_property]
+  end
+
   it "sets other options" do
     dsl.text(:foobar, optional: true)
     assert_equal true, resource.defs[:foobar].optional
-  end
-
-  describe "#ref" do
-    let(:definition) { Sinatra::Schema::Definition.new(id: :foobar) }
-
-    it "adds a reference to another definition in the resource" do
-      resource.defs[:foobar] = definition
-      dsl.ref :foobar
-      assert_equal 1, resource.defs.size
-      assert_equal 1, resource.properties.size
-    end
-
-    it "adds a reference to a definition in a different resource" do
-      other = Sinatra::Schema::Resource.new(path: "/others")
-      root.add_resource(other)
-      other.defs[:foobar] = definition
-      dsl.ref "other/foobar"
-      assert_equal 1, other.defs.size
-      assert_equal 1, resource.properties.size
-    end
-
-    it "raises when we can't resolve the ref" do
-      assert_raises(Sinatra::Schema::BadReference) do
-        dsl.ref :foobar
-      end
-    end
-
-    it "allows references to have a different id" do
-      other = Sinatra::Schema::Resource.new(path: "/others")
-      root.add_resource(other)
-      other.defs[:foobar] = definition
-      dsl.ref :my_foobar, "other/foobar"
-      assert resource.properties.has_key?(:my_foobar)
-      assert_equal :foobar, resource.properties[:my_foobar].id
-    end
   end
 end

@@ -45,25 +45,16 @@ module Sinatra
         end
 
         def ref(id, ref_to=nil)
-          ref_to ||= id
-          unless definition = resource.defs[ref_to] || Sinatra::Schema::Root.instance.find_definition(ref_to)
-            raise BadReference.new(id)
-          end
-          add definition, true, id
+          add Reference.new(resource, id, ref_to), true
         end
 
         # TODO support other types
 
         protected
 
-        def add(definition, reference=false, id=nil)
-          id ||= definition.id
-          targets.each_with_index do |hash, i|
-            # here's the trick, and here's why the first target is always the
-            # resource def: skip it when adding a reference (eg: it's already)
-            # in the resource def, just add the property!
-            next if reference && i == 0
-            hash[id] = definition
+        def add(definition, reference=false)
+          targets.each do |target|
+            target[definition.id] ||= definition
           end
         end
       end
