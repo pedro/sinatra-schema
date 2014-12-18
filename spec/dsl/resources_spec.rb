@@ -9,6 +9,11 @@ describe Sinatra::Schema::DSL::Resources do
     assert_equal "This is a foobar", dsl.resource.description
   end
 
+  it "sets the id casting to symbol" do
+    dsl.id("account")
+    assert_equal :account, dsl.resource.id
+  end
+
   describe "#property" do
     it "adds new definitions to the resource" do
       dsl.property.text :foo
