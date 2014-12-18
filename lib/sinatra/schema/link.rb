@@ -21,7 +21,7 @@ module Sinatra
             schema_params = parse_params(link.properties)
             validate_params!(schema_params, link.properties)
             res = instance_exec(schema_params, &link.action_block)
-            link.resource.validate_response!(res)
+            link.resource.validate_response!(link.rel, res)
             res
           end
         end

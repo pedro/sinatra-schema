@@ -20,5 +20,11 @@ module Sinatra
         super(msg)
       end
     end
+
+    class BadResponse < Error
+      def initialize(msg)
+        super(msg)
+      end
+    end
   end
 end
