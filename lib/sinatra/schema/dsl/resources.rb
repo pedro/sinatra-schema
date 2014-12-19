@@ -17,6 +17,10 @@ module Sinatra
           @resource.id = id.to_sym
         end
 
+        def title(title)
+          @resource.title = title
+        end
+
         def property
           DSL::Definitions.new(resource, [resource.defs, resource.properties])
         end
