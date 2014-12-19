@@ -2,7 +2,7 @@ require "spec_helper"
 
 describe Sinatra::Schema::Reference do
   let(:resource) { Sinatra::Schema::Root.instance.resources[:accounts] }
-  let(:ref) { described_class.new(resource, :foo, :email) }
+  let(:ref) { described_class.new(resource, :email) }
   let(:definition) { resource.defs[:email] }
 
   describe "#resolve!" do
@@ -48,6 +48,11 @@ describe Sinatra::Schema::Reference do
 
     it "#valid?" do
       assert_equal definition.valid?("foo"), ref.valid?("foo")
+    end
+
+    it "supports overriding delegated methods" do
+      ref.options[:description] = "diff"
+      assert_equal "diff", ref.description
     end
   end
 end

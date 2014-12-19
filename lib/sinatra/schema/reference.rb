@@ -1,20 +1,25 @@
 module Sinatra
   module Schema
     class Reference
-      attr_accessor :id, :ref_spec, :referenced_def, :resource
+      attr_accessor :id, :options, :ref_spec, :referenced_def, :resource
 
       # helper to lazily delegate method to the referenced definition
       def self.delegate(attribute)
         define_method(attribute) do |*args|
+          # support overriding attributes. example: referenced
+          # definition is optional, but parameter is not
+          return options[attribute] if options.has_key?(attribute)
+
           resolve!
           referenced_def.send(attribute, *args)
         end
       end
 
-      def initialize(resource, id, ref_spec=nil)
-        @id = id
-        @ref_spec = ref_spec || id
+      def initialize(resource, id, options={})
         @resource = resource
+        @id       = id
+        @ref_spec = options[:to] || id
+        @options  = options
       end
 
       def resolve!

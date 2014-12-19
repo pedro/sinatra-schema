@@ -36,8 +36,8 @@ module Sinatra
         end
 
         # support references to other properties that are lazily evaluated
-        def ref(id, ref_to=nil)
-          add Reference.new(resource, id, ref_to)
+        def ref(id, options={})
+          add Reference.new(resource, id, options)
         end
 
         def text(id, options={})
