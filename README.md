@@ -58,9 +58,23 @@ end
 
 resource("/albums") do |res|
   res.property.text :name, description: "Album name"
-  res.property.ref :artist_name, "artists/name"
+  res.property.ref :artist_name, to: "artists/name"
 end
 ```
+
+You can also customize attributes on the reference so that they're different from the original property. For instance:
+
+```ruby
+resource("/artists") do |res|
+  res.property.text :name, description: "Artist name"
+
+  res.patch do |link|
+    link.property.ref :name, optional: true
+  end
+end
+```
+
+In this case the artist name has to be serialized by every endpoint on the resource, but doesn't have to be informed by every request to `PATCH` the resource.
 
 ### Nested properties
 
