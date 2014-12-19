@@ -57,6 +57,12 @@ describe Sinatra::Schema::Definition do
       refute definition.valid?("42omg")
     end
 
+    it "validates objects" do
+      definition.type = "object"
+      assert definition.valid?(good: true)
+      refute definition.valid?("bad")
+    end
+
     it "validates text" do
       definition.type = "string"
       assert definition.valid?("foo")

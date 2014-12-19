@@ -24,6 +24,8 @@ module Sinatra
           value.to_s
         when "integer"
           value.to_i
+        when "object"
+          value
         end
       end
 
@@ -39,6 +41,8 @@ module Sinatra
           value.to_s =~ /\A[^@\s]+@([^@\s]+\.)+[^@\s]+\z/
         when "integer"
           value.to_s =~ /\A\d*\z/
+        when "object"
+          value.is_a?(Hash)
         when "string"
           value.is_a?(String)
         when "uuid"

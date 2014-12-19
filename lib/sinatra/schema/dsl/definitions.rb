@@ -30,6 +30,11 @@ module Sinatra
           add Definition.new(options)
         end
 
+        def object(id, options={})
+          options.merge!(id: id, type: "object")
+          add Definition.new(options)
+        end
+
         # support references to other properties that are lazily evaluated
         def ref(id, ref_to=nil)
           add Reference.new(resource, id, ref_to)

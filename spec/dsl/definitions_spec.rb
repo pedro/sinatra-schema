@@ -29,6 +29,12 @@ describe Sinatra::Schema::DSL::Definitions do
     assert_equal "integer", resource.defs[:foobar].type
   end
 
+  it "adds object definition to the resource" do
+    dsl.object(:foobar)
+    assert_equal 1, resource.defs.size
+    assert_equal "object", resource.defs[:foobar].type
+  end
+
   it "adds references" do
     dsl.ref(:another_property)
     assert_equal 1, resource.defs.size
