@@ -41,8 +41,8 @@ module Sinatra
       Root.instance
     end
 
-    def resource(path)
-      spec = DSL::Resources.new(self, path)
+    def resource(path_or_id)
+      spec = DSL::Resources.new(self, path_or_id)
       yield(spec)
       schema_root.add_resource(spec.resource)
     end

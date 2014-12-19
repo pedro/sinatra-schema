@@ -4,7 +4,8 @@ module Sinatra
       attr_accessor :id, :path, :title, :defs, :links, :description, :properties
 
       def initialize(options)
-        @path       = options.fetch(:path).chomp("/")
+        @id         = options[:id]
+        @path       = (options[:path] || "").chomp("/")
         @links      = []
         @defs       = {}
         @properties = {}

@@ -4,9 +4,13 @@ module Sinatra
       class Resources
         attr_accessor :app, :resource
 
-        def initialize(app, path)
-          @app      = app
-          @resource = Resource.new(path: path)
+        def initialize(app, path_or_id)
+          @app = app
+          if path_or_id.is_a?(Symbol)
+            @resource = Resource.new(id: path_or_id)
+          else
+            @resource = Resource.new(path: path_or_id)
+          end
         end
 
         def description(description)
