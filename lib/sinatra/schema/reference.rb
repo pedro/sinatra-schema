@@ -35,7 +35,12 @@ module Sinatra
       delegate :example
       delegate :optional
       delegate :type
-      delegate :valid?
+
+      # redefine to make sure overrides on "optional" are considered
+      def valid?(value)
+        resolve!
+        referenced_def.valid?(value, self.optional)
+      end
     end
   end
 end

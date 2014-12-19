@@ -29,8 +29,8 @@ module Sinatra
         end
       end
 
-      def valid?(value)
-        return true if value.nil? && optional
+      def valid?(value, skip_nils=optional)
+        return true if value.nil? && skip_nils
 
         case type
         when "boolean"
