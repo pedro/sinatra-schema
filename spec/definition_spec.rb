@@ -26,6 +26,11 @@ describe Sinatra::Schema::Definition do
       assert_equal "UTC", t.zone
     end
 
+    it "casts integers" do
+      definition.type = "integer"
+      assert_equal 42, definition.cast("42")
+    end
+
     it "casts text" do
       definition.type = "string"
       assert_equal "123", definition.cast(123)
@@ -44,6 +49,12 @@ describe Sinatra::Schema::Definition do
       definition.type = "email"
       assert definition.valid?("foo@bar.com")
       refute definition.valid?("foobar.com")
+    end
+
+    it "validates integers" do
+      definition.type = "integer"
+      assert definition.valid?(42)
+      refute definition.valid?("42omg")
     end
 
     it "validates text" do

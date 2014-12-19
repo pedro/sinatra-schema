@@ -62,6 +62,8 @@ module Sinatra
           ["string", "date-time"]
         when "email"
           ["string", "email"]
+        when "integer"
+          "integer"
         when "string"
           "string"
         when "uuid"

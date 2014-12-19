@@ -22,6 +22,8 @@ module Sinatra
           Time.parse(value.to_s)
         when "email", "string", "uuid"
           value.to_s
+        when "integer"
+          value.to_i
         end
       end
 
@@ -35,6 +37,8 @@ module Sinatra
           value.to_s =~ /^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-2][0-9]:[0-5][0-9]:[0-5][0-9](\.[0-9]+)?(Z|[\-+][0-9]{2}:[0-5][0-9])$/
         when "email"
           value.to_s =~ /\A[^@\s]+@([^@\s]+\.)+[^@\s]+\z/
+        when "integer"
+          value.to_s =~ /\A\d*\z/
         when "string"
           value.is_a?(String)
         when "uuid"

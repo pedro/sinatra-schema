@@ -40,6 +40,12 @@ describe Sinatra::Schema::JsonSchema do
       assert_equal "email", schema[:format]
     end
 
+    it "handles the integer format" do
+      definition.type = "integer"
+      schema = json_schema.dump_definition(definition)
+      assert_equal "integer", schema[:type]
+    end
+
     it "handles the uuid format" do
       definition.type = "uuid"
       schema = json_schema.dump_definition(definition)
