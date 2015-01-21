@@ -41,7 +41,12 @@ module Sinatra
       end
 
       def validate_properties!(received)
-        missing = properties.keys.map(&:to_s).sort - received.keys.map(&:to_s).sort
+        required_properties = properties.map do |k, prop|
+          # ignore nested properties for now, we'll cover these next
+          k unless prop.is_a?(Hash) || prop.optional
+        end.compact
+
+        missing = required_properties.map(&:to_s).sort - received.keys.map(&:to_s).sort
         unless missing.empty?
           raise BadResponse.new("Missing properties: #{missing}")
         end
