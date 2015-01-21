@@ -47,7 +47,7 @@ module Sinatra
       def dump_link(link)
         {
           description: link.description,
-          href:        link.href,
+          href:        format_uri_template(link),
           method:      link.method.to_s.upcase,
         }
       end
@@ -69,6 +69,13 @@ module Sinatra
         when "uuid"
           ["string", "uuid"]
         end
+      end
+
+      def format_uri_template(link)
+        link.resource.path + link.href.gsub(/:[\d\w_]+/) do |var|
+          var = var[1..-1] # take the : away
+          "{#{var}}"
+        end.chomp("/")
       end
     end
   end

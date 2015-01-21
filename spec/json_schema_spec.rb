@@ -55,12 +55,24 @@ describe Sinatra::Schema::JsonSchema do
   end
 
   describe "#dump_link" do
-    let(:link) { Sinatra::Schema::Link.new }
+    let(:resource) { Sinatra::Schema::Resource.new(path: "/foo") }
+    let(:link)     { Sinatra::Schema::Link.new(resource: resource, href: "/") }
 
     it "renders the method in upcase" do
       link.method = :get
       schema = json_schema.dump_link(link)
       assert_equal "GET", schema[:method]
+    end
+
+    it "appends the resource path to href" do
+      schema = json_schema.dump_link(link)
+      assert_equal "/foo", schema[:href]
+    end
+
+    it "formats the href with URI template" do
+      link.href = "/:id"
+      schema = json_schema.dump_link(link)
+      assert_equal "/foo/{id}", schema[:href]
     end
   end
 end
